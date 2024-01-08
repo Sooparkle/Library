@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Library</title>
+</head>
+<body>
+
+  <button id="action" type="button">CLICK</button>
+
+
+  <script>
+    const $button = document.querySelector("#action");
+
+    $button.addEventListener("click", ()=>{
+      libBooks();
+
+    })
+
+    // 도서관별 장서/대출 데이터 조회
+    // 기본 URL = http://data4library.kr/api/itemSrch?authKey= 인증키값 
+    //libCode = 도서관 코드
+    // ype 검색조건 [ALL:전체 데이터] 선택필수 문자
+    // authKey 인증키 필수 문자열
+    // libCode 도서관코드 필수 숫자
+    // isbn13 13 자리 ISBN 선택 숫자
+    // startDt 검색시작일자(도서 등록일) 선택필수 yyyy-mm-dd
+    // endDt 검색종료일자(도서 등록일) 선택필수 yyyy-mm-dd
+    // pageNo 페이지번호 선택 숫자
+    // pageSize 페이지크기 선택 숫자
+    // format 응답유형 [xml: xml 타입, json: json 타입] 선택 문자열
+
+
+
+
+    function libBooks() {
+      fetch("http://data4library.kr/api/itemSrch?authKey=43d7efdc5d7f99a3be907ecac62d3212026fb810e793f19e56fb0b5a390c93f8&libCode=111070&startDt=2023-01-01&endDt=2023-12-31&format=json&pageSize=9999").then(function(response) {
+
+        if(response.status !== 200) {
+          alert("서버와 통신을 실패했습니다!");
+        } else{
+          console.log("서버와 통신 성공.")
+          return response.json();
+        }
+
+      }).then(function(jsonData){
+        
+        let a = jsonData.response.docs;
+        console.log(a);
+        // let isbnArray = []
+        // for ( let item = 0; item < a.length; item++){
+        //   let isbnList = a[item].doc.isbn13;
+        //   console.log(isbnList);
+
+        })
+
+    };
+
+
+  </script>
+  
+</body>
+</html>
