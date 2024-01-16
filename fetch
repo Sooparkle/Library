@@ -33,12 +33,6 @@
   <h1>지역 도서관 대출 베스트 </h1>
 
   <div class="data-wrap">
-    <!-- <img src="##" alt="">
-    <div class="book-detail">
-      <div class="title">제목 : </div>
-      <div class="book-class">분류 : </div>
-      <div class="ranking">랭킹 : </div>
-    </div> -->
   </div>
     
   <p>인증키</p>
@@ -132,34 +126,23 @@
       fetch(url).then((response) => {
         if(response.status != 200){
           console.log("서버 통신 실패")
+          return
         } else{
           return response.json();
         }
       }).then((data) =>{
-        const jsonData = data.response.docs[0];
-        const insertTag = "";
+        const jsonData = data.response.docs;
+        const jsonDataArray = Array.from(jsonData);
 
-        console.log(jsonData)
-
-    //위까지는 문제 없음
-
-        // for (let item = 0; item < 10; item ++){
-        //   const img = jsonData[item].bookImageURL;
-        //   const name = jsonData[item].bookname;
-        //   const bookClass = jsonData[item].class_nm;
-        //   const ranking = jsonData[item].ranking;
-
-
-        // insertTag += '<img src=" '+img+' " />';
-        // insertTag += '<div class="book-detail">';
-        // insertTag += '<div class="name">' + name + '</div>' ;
-        // insertTag += '<div class="book-class">' + bookClass + '</div>';
-        // insertTag += '<div class="ranking">' + ranking + '</div>'
-        // insertTag +='</div>'
-
+        // for (let i = 0; i <10; i++ ){
+        //   console.log(`<div> Name : ${jsonData[i].doc.bookname}</div>`)
         // }
-        
-        // $bookWrap.innerHTML= insertTag;
+
+        jsonDataArray.forEach((item, index) => {
+          const name = `<div> Name : ${jsonDataArray[index].doc.bookname}</div>`
+          $bookWrap.insertAdjacentElement("beforeend", name);
+          
+        });
 
       }).catch(error =>{
         console.log("에러 발생")
