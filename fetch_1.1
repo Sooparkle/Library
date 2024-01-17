@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/reset.css">
+  <title>Library</title>
+</head>
+<style>
+button{
+  border-radius: 4px;
+  padding: .8rem 1.4rem;
+  background :#1f98e8;
+  color:#fff;
+  font-size: 1rem;
+}
+
+body{
+  margin: 0 2rem;
+}
+
+  .data-wrap{
+    display: grid;
+    grid-template-columns: 1fr;
+    border-top: 1px solid #ccc;
+    padding:1rem 3rem;
+    margin-bottom: 1rem;
+    margin-top :1.2rem;
+    background : #eee;
+    position: relative;
+  }
+
+
+.book-wrap{
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    gap :3rem;
+    border-top: 1px solid #999;
+    padding:2rem;
+    background: #fff
+
+}
+
+.data-wrap:nth-last-of-type(1){
+  border-bottom: 1px solid #999;
+}
+
+
+.book-wrap .detail{
+  color: #999;
+}
+
+.book-wrap .detail span{
+  color: #000;
+  font-weight: 500;
+}
+
+.book-wrap .detail span:nth-of-type(1){
+  color: #000;
+  font-weight: normal;
+}
+
+.book-wrap  .name{
+  margin-bottom:1rem;
+}
+
+.book-wrap img{
+  object-fit: contain;
+  width:200px;
+  height:294px;
+  box-shadow: 4px 4px 4px 4px #0000003e;
+  border-radius: 6px;
+}
+
+
+</style>
+<body>
+  
+  <h1>지역 도서관 대출 베스트 </h1>
+  <button id="action" type="button">CLICK(세종시)</button>
+  
+  <div class="data-wrap"></div>
+    
+<!-- 
+
+  <div class="container">
+    <h3>Ideas List</h3>
+    <ol>
+      <li><a href="#=">특정 기간 동안의 대출 총량을 분석하여 상위 몇개만 추릴 것</a>
+        <p> failure bc 너무 많은 양의 데이터 호출 불가</p>
+        <img class="" src="https://blog.kakaocdn.net/dn/ccn0bP/btsDbemancN/UC64b3ZGr3FhbFmtNBcG51/img.png" alt="">
+        <li>
+          <a href="#=" >지역별 인기도서 선정(3번, 7 페이지)</a>
+          <dl>
+            <dt></dt>
+            <dd></dd>
+          </dl>
+        </li>
+        <li>
+          <a href="#=" >지역별 독서량/독서율 (18번 API)</a>
+          <dl>
+            <dt>재미있는 요소</dt>
+            <dd>독서량(quantity): 대출 회원 1 명이 읽은 일반도서의 권수(대출 권수/대출 회원수)</dd>
+            <dd>독서율(rate): 일반도서를 1 권 이상 읽은 사람의 비율(대출 회원수/전체 회원수)</dd>
+          </dl>
+        
+        </li>
+        <li><a href="#=" ></a></li>
+    </ol>
+
+  </div>
+
+<br>
+<div class="container">
+  <h3>각 인증을 위한 파라미터 코드(19번 )</h3>
+  <div class="grid">
+    <div class="code-grid-item">
+      <h4>지역 코드(region)</h4>
+      <p>1. 서울(11)</p>
+      <p>2. 세종특별자치시 (29)</p>
+      <p>3. 경기도 (31)</p>
+    </div>
+    <div class="code-grid-item">
+      <h4>세부지역 구분(dtl_region)</h4>
+      <p>1. 경기도 성남시 분당구(31023)</p>
+      <p>2. 세종특별자치시 (29010)</p>
+      <p>3. 서울특별시 송파구 (11240)</p>
+      <p>4. 서울특별시 강동구 (11250)</p>
+    </div>
+    <div class="code-grid-item">
+      <h4>도서관/지역별 인기대출 도서 조회(9번, 페이지25)</h4>
+      <p></p>
+    </div>
+    <div class="code-grid-item"></div>
+
+  </div>
+</div>
+
+<style>
+  img{
+    width:800px;
+    height: 100%;
+    box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.194);
+  }
+
+  .grid{
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+    background: bisque;
+    padding:10px;
+  }
+
+</style> -->
+
+
+  <script>
+    const $button = document.querySelector("#action");
+    const $bookWrap = document.querySelector(".data-wrap");
+
+    $button.addEventListener("click", ()=>{
+      libBooks();
+
+    })
+
+
+    function libBooks() {
+      const url = "http://data4library.kr/api/loanItemSrchByLib?authKey=43d7efdc5d7f99a3be907ecac62d3212026fb810e793f19e56fb0b5a390c93f8&dtl_region=11240&startDt=2023-01-01&endDt=2023-12-31&format=json"
+
+      fetch(url).then((response) => {
+        if(response.status != 200){
+          console.log("서버 통신 실패")
+          return
+        } else{
+          return response.json();
+        }
+      }).then((data) =>{
+        const jsonData = data.response.docs;
+        let dataBox ="";
+
+
+        //문자열 스플리트
+  // const message1 = "Still waters run deep.";
+  // const arr1 = message1.split(" ");
+  // console.log(arr1); ["Still", "waters", "run", "deep."]
+  // 참조 https://codingbroker.tistory.com/33
+
+
+
+        jsonData.forEach((value, index) => {
+        const bookImageURL = value.doc.bookImageURL || "https://www.splib.or.kr/include/image/common/noimg_book.png"
+
+          dataBox += `
+          <div class="book-wrap">
+            <img class="book-img" src="${bookImageURL ? bookImageURL :"https://www.splib.or.kr/include/image/common/noimg_book.png" }" alt="${value.doc.bookname}">
+            <div class="detail">
+              <h2 class="name"><span>${index+1}.&nbsp${value.doc.bookname}</span></h2>
+              <div class="author">작가 : <span>${value.doc.authors}</span></div>
+              <div class="genres">장르: <span>${value.doc.class_nm}</span></div>
+              <div class="isbn13">ISBN : <span>${value.doc.isbn13}</span></div>
+              <div class="ranking">대출 순위 : <span> ${value.doc.ranking}</span></div>
+            </div>
+            </div>
+            `  });
+          document.querySelector(".data-wrap").innerHTML = dataBox;
+            console.dir(dataBox);
+
+        }).catch(error =>{
+        console.log("에러 발생")
+      })
+    } 
+
+
+  </script>
+  
+</body>
+</html>
