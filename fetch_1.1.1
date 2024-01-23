@@ -5,23 +5,44 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/reset.css">
   <title>Library</title>
+  <script src="https://www.gstatic.com/charts/loader.js"></script>
+
 </head>
-
-
-
 <style>
-  button{
-    border-radius: 4px;
-    padding: .8rem 1.4rem;
-    background :#1f98e8;
-    color:#fff;
-    font-size: 1rem;
-  }
-  
-  body{
-    margin: 0 2rem;
-  }
-  
+button{
+  border-radius: 4px;
+  padding: .8rem 1.4rem;
+  background :#fff;
+  border: 1px solid #eaeaea;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+body{
+  margin: 0 2rem;
+}
+
+.book-header,
+.button-wrap{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.seoul-gu:hover{
+  background: #1f98e8;
+  color : #fff;
+  font-weight: 700;
+}
+
+.book-header{
+  background: #d0d0d0;
+
+}
+
+.button-wrap{
+  gap : 0.5rem;
+}
+
   .data-wrap{
     display: grid;
     grid-template-columns: 1fr;
@@ -70,29 +91,31 @@
   
   .book-wrap img{
     object-fit: contain;
-    width:200px;
-    height:294px;
+    width:143px;
+    height:100%;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
     border-radius: 6px;
   }
-  
 
   .top-btn{
     position: fixed;
     bottom: 3rem;
     right:3rem;
-
   }
 
-  .top-btn .top-scroll-btn{
+  .top-scroll-btn {
     display: flex;
     justify-content: center;
     align-items: center;
     height:100%;
     border-radius: 50%;
-    padding:1rem;
+    width:60px;
+    height:60px;
+    background:#1f98e8;;
+    color:#fff;
     cursor: pointer;
-    
+    border:none;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.216);
   }
 
   .the-book-detail{
@@ -129,7 +152,35 @@
   </style>
   <body>
     
-    <h1>지역 도서관 대출 베스트 </h1>
+    <h1>서울시 구별 도서관 대출 베스트 200 </h1>
+    <div class="button-wrap">
+      <button class="seoul-gu" type="button" value="11010">종로구</button>
+      <button class="seoul-gu" type="button" value="11020">중구</button>
+      <button class="seoul-gu" type="button" value="11030">용산구</button>
+      <button class="seoul-gu" type="button" value="11040">성동구</button>
+      <button class="seoul-gu" type="button" value="11050">광진구</button>
+      <button class="seoul-gu" type="button" value="11060">동대문구</button>
+      <button class="seoul-gu" type="button" value="11070">중랑구</button>
+      <button class="seoul-gu" type="button" value="11080">성북구</button>
+      <button class="seoul-gu" type="button" value="11090">강북구</button>
+      <button class="seoul-gu" type="button" value="11100">도봉구</button>
+      <button class="seoul-gu" type="button" value="11110">노원구</button>
+      <button class="seoul-gu" type="button" value="11120">은평구</button>
+      <button class="seoul-gu" type="button" value="11130">서대문구</button>
+      <button class="seoul-gu" type="button" value="11140">마포구</button>
+      <button class="seoul-gu" type="button" value="11150">양천구</button>
+      <button class="seoul-gu" type="button" value="11160">강서구</button>
+      <button class="seoul-gu" type="button" value="11170">구로구</button>
+      <button class="seoul-gu" type="button" value="11180">금천구</button>
+      <button class="seoul-gu" type="button" value="11190">영등포구</button>
+      <button class="seoul-gu" type="button" value="11200">동작구</button>
+      <button class="seoul-gu" type="button" value="11210">관악구</button>
+      <button class="seoul-gu" type="button" value="11220">서초구</button>
+      <button class="seoul-gu" type="button" value="11230">강남구</button>
+      <button class="seoul-gu" type="button" value="11240">송파구</button>
+      <button class="seoul-gu" type="button" value="11250">강동구</button>
+    </div>
+
     <button id="action" type="button">CLICK(세종시)</button>
 
     <table class="columns">
@@ -144,12 +195,15 @@
       </div>
     </div>
     
+    <div class="book-header">
+      <div class="col1"></div>
+      <div class="col2"></div>
+    </div>
     <div class="data-wrap"></div>
 
 
     <div class="top-btn">
-      <button class="top-scroll-btn" type="button" onclick="scrollTop">TOP</button>
-
+      <button class="top-scroll-btn" type="button" data-scroll="false">TOP</button>
     </div>
       
   <!-- 
@@ -228,11 +282,24 @@
     <script>
       const $bookApiBtn = document.querySelector("#action");
       const $bookWrap = document.querySelector(".data-wrap");
-  
-      const scrollTop = () => {
-        console.log('click');
-        document.querySelector(".top-btn").scrollTop = 0;
+      const $scrollTop = document.querySelector("[data-scroll='false']");
+
+      window.onscroll = function() {scrollFunction()};
+
+      function scrollFunction() {
+        if($scrollTop.scrollTop > 20 ){
+          $scrollTop.style.display = "black";
+        } else{
+          $scrollTop.style.display = "none";
+        }
       }
+
+      $scrollTop.addEventListener("click", (e)=>{
+        // const scrollPosition = document.querySelector(this).offsetTop
+
+          window.scrollTo({top:0, behavior:"smooth"});
+          console.log(e.target)
+        })
 
 
       $bookApiBtn.addEventListener("click", ()=>{
@@ -333,7 +400,12 @@
             ['철학', kdcPhilo],
             ['종교', kdcReli],
             ['사회과학', kdcSociety],
-            ['자연과학', kdcNature]
+            ['자연과학', kdcNature],
+            ['기술과학', kdcTech ],
+            ['예술', kdcArt ],
+            ['언어', kdcLang ],
+            ['문학', kdcLitera ],
+            ['역사', kdcHisto ]
           ]);
 
           // Set options for Sarah's pie chart.
@@ -341,7 +413,7 @@
                         width:400,
                         height:300};
 
-          // Instantiate and draw the chart for Sarah's pizza.
+          // chart first one
           var chart = new google.visualization.PieChart(document.getElementById('Sarah_chart_div'));
           chart.draw(data, options);
         }
@@ -351,14 +423,19 @@
 
           // Create the data table for Anthony's pizza.
           var data = new google.visualization.DataTable();
-          data.addColumn('string', 'Topping');
+          data.addColumn('string', '문학');
           data.addColumn('number', 'Slices');
           data.addRows([
-            ['Mushrooms', 1],
-            ['Onions', 2],
-            ['Olives', 2],
-            ['Zucchini', 0],
-            ['Pepperoni', 3]
+            ['문학', literaGeneral ],
+            ['한국문학', literaKorea ],
+            ['중국문학', literaChina ],
+            ['일본문학', literaJapan ],
+            ['영미문학', literaEnglish ],
+            ['독일문학', literaGerman ],
+            ['프랑스문학', literaFrance ],
+            ['스페인문학', literaSpain ],
+            ['이탈리아문학', literaItaly  ],
+            ['기타제문학', 3],
           ]);
 
           // Set options for Anthony's pie chart.
