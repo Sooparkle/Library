@@ -1,0 +1,76 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+
+
+
+.data-wrap{
+  display: grid;
+  grid-template-columns: 1fr;
+  border-top: 1px solid #ccc;
+  padding:1rem 3rem;
+  margin-bottom: 1rem;
+  margin-top :1.2rem;
+  background : #eee;
+  }
+
+
+.book-wrap{
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  gap :3rem;
+  border-top: 1px solid #eaeaea;
+  padding:2rem;
+  background: #dfdfdf;
+  position: relative;
+}
+
+.data-wrap:nth-last-of-type(1){
+  border-bottom: 1px solid #eaeaea;
+}
+
+
+.top-scroll-btn {
+  position:fixed;
+  bottom : 3rem;
+  right: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height:100%;
+  border-radius: 50%;
+  width:60px;
+  height:60px;
+  background:#1f98e8;;
+  color:#fff;
+  cursor: pointer;
+  border:none;
+  box-shadow: 0 6px 6px rgba(0, 0, 0, 0.109);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
