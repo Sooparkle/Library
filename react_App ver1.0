@@ -6,6 +6,11 @@ import './App.css'
 
 function App() {
 
+  const [youtube, setYoutube] = useState([
+    {id:1, youtubeName : "겨울서점", url:"https://www.youtube.com/@winterbooks/videos"},
+    {id:2, youtubeName : "공백의 책단장", url:"https://www.youtube.com/@gongbaeksbookdressup3399/videos"},
+    {id:3, youtubeName : "따듯한 목소리 현준", url:"https://www.youtube.com/@voice_hyunjun/videos"}
+  ]);
 
   const [count, setCount] = useState(0);
   const [library, setLibrary] = useState([
@@ -27,7 +32,7 @@ function App() {
     {id : 16, value : 11160, libName : "강서구" },
     {id : 17, value : 11170, libName : "구로구" },
     {id : 18, value : 11180, libName : "금천구" },
-    {id : 19, value : 11190, libName : "영등포" },
+    {id : 19, value : 11190, libName : "영등포구" },
     {id : 20, value : 11200, libName : "동작구" },
     {id : 21, value : 11210, libName : "관악구" },
     {id : 22, value : 11220, libName : "서초구" },
@@ -37,33 +42,124 @@ function App() {
   ]);
   const [newLibrary, setNewLibrary] = useState([]);
 
-  useEffect(() => {
-    fetch ("http://data4library.kr/api/loanItemSrchByLib?authKey=43d7efdc5d7f99a3be907ecac62d3212026fb810e793f19e56fb0b5a390c93f8&dtl_region=11240&startDt=2023-01-01&endDt=2023-12-31&format=json")
-    .then((response) =>{
-      if(response.status !== 200) {
-        console.log("서버 통신 실패") 
-        return;
-      } else {
-        return response.json();
-      }
-    }).then((data)=>{
-      const jsonData = data.response.docs;
-      setNewLibrary(jsonData);
-
-    });
-  }, []);
   
+//     useEffect(() => {
+//       const fetchAPI = (selected) =>{
+//       fetch (`http://data4library.kr/api/loanItemSrchByLib?authKey=43d7efdc5d7f99a3be907ecac62d3212026fb810e793f19e56fb0b5a390c93f8&dtl_region=${selected}}&startDt=2023-01-01&endDt=2023-12-31&format=json`)
+//       .then((response) =>{
+//         if(response.status !== 200) {
+//           console.log("서버 통신 실패");
+//           return
+//         } else {
+//           return response.json();
+//         }
+//       }).then((data)=>{
+//         const jsonData = data.response.docs;
+//         setNewLibrary(jsonData);
+//       });
+//     }, []});
+    
+
+// const librarySelect = (e) =>{
+//   const selected = e.target.value;
+//   if (selected == library.libName) {
+//     return fetchAPI(selected)
+//   //fetch에 library value 전달
+
+//   //   return setLibrary(selected)};
+//   // if (selected == '중구') {setLibrary(selected)};
+//   // if (selected == '용산구') {setLibrary(selected)};
+//   // if (selected == '성동구') {setLibrary(selected)};
+//   // if (selected == '광진구') {setLibrary(selected)};
+//   // if (selected == '동대문구') {setLibrary(selected)};
+//   // if (selected == '중랑구') {setLibrary(selected)};
+//   // if (selected == '성북구') {setLibrary(selected)};
+//   // if (selected == '강북구') {setLibrary(selected)};
+//   // if (selected == '도봉구') {setLibrary(selected)};
+//   // if (selected == '노원구') {setLibrary(selected)};
+//   // if (selected == '은평구') {setLibrary(selected)};
+//   // if (selected == '서대문구') {setLibrary(selected)};
+//   // if (selected == '마포구') {setLibrary(selected)};
+//   // if (selected == '양천구') {setLibrary(selected)};
+//   // if (selected == '강서구') {setLibrary(selected)};
+//   // if (selected == '구로구') {setLibrary(selected)};
+//   // if (selected == '금천구') {setLibrary(selected)};
+//   // if (selected == '영등포구') {setLibrary(selected)};
+//   // if (selected == '동작구') {setLibrary(selected)};
+//   // if (selected == '관악구') {setLibrary(selected)};
+//   // if (selected == '서초구') {setLibrary(selected)};
+//   // if (selected == '강남구') {setLibrary(selected)};
+//   // if (selected == '송파구') {setLibrary(selected)};
+//   // if (selected == '강동구') {setLibrary(selected)};
+
+// }
+
+
+// 슬라이더
+// https://www.youtube.com/watch?v=6YnryDjEGr8
+
+
+
+  const topButton = () =>{
+    useEffect(() => {
+      const handleShowButton = () => {
+          if (window.scrollY > 500) {
+              setShowButton(true)
+          } else {
+              setShowButton(false)
+          }
+      }
+
+
+      window.addEventListener("scroll", handleShowButton)
+      return () => {
+          window.removeEventListener("scroll", handleShowButton)
+      }
+  }, [])
+  }
+
+
+  //https://velog.io/@jahommer/React-Top%EB%B2%84%ED%8A%BC-scroll-to-top%EB%A7%8C%EB%93%A4%EA%B8%B0
+
 
   return (
     <>
 
       <h1>서울시 구립도서관 <br/>대출 베스트 200</h1>
 
-        {
-          newLibrary.map((item, index) => {
-          return <div key={item.doc.no}>{item.doc.no}. {item.doc.bookname}</div>
-          })
-        }
+      <div className="youtube">
+      </div>
+
+
+          <form>
+            <input value={library} onChange={librarySelect}></input>
+          </form>
+
+
+          <div className="data-wrap">
+          {
+            newLibrary.map((item, index) => {
+              const dataBook=item.doc;
+              return (
+                <div className="book-wrap" key={dataBook.no}>
+                  <img src={dataBook.bookImageURL} alt={dataBook.bookname} />
+                  <div className="detail">
+                    <div className="name-ranking">{dataBook.no}. {dataBook.bookname}</div>
+                    <div className="author">{dataBook.authors}</div>
+                    <div className="genres">{dataBook.class_nm}</div>
+                    <div className="isbn13">{dataBook.isbn13}</div>
+                  </div>
+              </div>
+            )
+            })
+          }
+        </div>
+
+
+
+
+        <button className="top-scroll-btn" onClick={topButton} type="button" >TOP</button>
+
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
