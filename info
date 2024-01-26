@@ -1,0 +1,87 @@
+// Route
+
+1. npm i react-router
+2. npm i react-raouter-dom => 이것만 해도 
+
+import { BrowserRouter, HashRouter, Route, Link } from 'reac-router-dom';
+BrowserRouter : browser에서 사용 => 새로구침을 하면 현 페이지 안나옴. 이유는 프론에만 데이터를 가지고 있어서. 서버에서 정보를 안 가지고 있어서.
+HashRouter : server에서 사용 => 새로고침을 하면 현재 페이지를 그대로.#뒤에는 프론트에서만 정보를 알고 있음.
+
+--
+return(
+  <BrowserRouter>
+    <div>
+      <Link to="/number-baseball">숫자야구</Link>
+      <Link to="/rock-scissor-papperl">가위바위보</Link>
+      <Link to="/lotto-generator">로또생성기</Link>
+    </div>
+    <div>
+      <Route path="/number-baseball" component={NumberBaseball} />
+      <Route path="/rock-scissor-papperl" component={RSP} />
+      <Route path="/lotto-generator component={Lotto} />
+  <BrowserRouter>
+
+
+++ index.js
+
+import {BrowserRouter} from 'react-router-dom';
+
+root.render(
+<React.StrictMode>
+  <BrowserRouter>
+    <App />
+  <BrowserRouter>
+<React.StrictMode>
+
+
+++ App.js
+import { Route, Routes } from "react-router-dom';
+
+
+return (
+  <>
+    <div className="container">
+      <Routes>
+        <Route path="/" element={<home />} />
+        <Route path="/pricing" element={<Pricing />} />
+        <Route path="/about" element={<About />} />
+      </Routes>
+    </div>
+  </>
+
+
+
+++ Navbar.js
+import { Link, usematch, useResolvedPath } from "react-route-dom'
+
+export default function Navbar() {
+  return (
+    <nav className="nav">
+      <Link to="/" className="site-title">Site Name</Link>
+     <ul>
+        <CustomLink to="/pricing">Pricing</CustomLink>
+        <CustomLink to="/pricing">Pricing</CustomLink>
+    </ul>
+  </nav>
+  )
+}
+
+function CustomLink({ to, children, ...props )} {
+  const resolvedPath = useResolvedPath(to)
+  const isActiv = useMatch({ path: resolvePath.parthname, end:true })
+
+  return (
+    <li className={path === to? "activa" : ""}>
+      <Link to={to} {...props}>
+          {children}
+      </Link>
+    </li>
+  )
+}
+
+
+
+
+참조
+https://www.youtube.com/watch?v=SLfhMt5OUPI
+https://www.youtube.com/watch?v=EPKaFEU2c28
