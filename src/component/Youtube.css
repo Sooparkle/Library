@@ -1,0 +1,14 @@
+/* youtubu area */
+.youtube-wrap h2{
+  text-align: left;
+  margin-top:50px ;
+}
+.youtube{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap:3rem;
+  }
+
+.each img{
+  width:100%;
+}
