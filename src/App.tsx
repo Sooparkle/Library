@@ -3,13 +3,12 @@ import './App.css';
 import react from "@vitejs/plugin-react-swc";
 import {BrowserRouter, Link, Route} from 'React-Router-dom';
 import Youtube from './component/Youtube';
-
+import logo from './logo.svg';
 
 
 function App() {
 
   const [title, setTitle] = useState('서울시');
-
   const [searchKeyword, setSearchKeyword] = useState("");
   const [formResult, setFormResult] = useState("");
   const [showButton, setShowButton] = useState(false);
@@ -96,9 +95,13 @@ function App() {
       <div className="search-background">
         <h1><span className="lib-title">{title}</span> 우리 동네 도서관 <br/>대출 베스트 200</h1>
         <div className="search-wrap">
-          <div><span className='logo'>LOGO</span></div>
+          <div className="logo-wrap">
+            <img src={logo} alt="logo" />
+          </div>
           <form onSubmit={handleResult}>
-            <input value={searchKeyword} onChange={handleChangeInput}></input>
+            <div className="input-wrap">
+              <input value={searchKeyword} onChange={handleChangeInput} placeholder="'-구'를 입력해주세요! 예시)종로구"></input>
+            </div>
           </form>
           <button type="submit">검색</button>
         </div>
