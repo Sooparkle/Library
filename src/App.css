@@ -1,0 +1,196 @@
+#root {
+  min-width: 1100px;
+  margin: 0 auto;
+  padding:0  2rem;
+  text-align: center;
+}
+
+button{
+  padding:0
+}
+
+
+/* search background area */
+.search-background{
+  min-height: 300px;
+  height:50vh;
+  background: #cbeaff;
+  position: relative;
+}
+
+
+.search-wrap{
+  position:absolute;
+  bottom: 10%;
+  left:50%;
+  transform: translate(-50%, -50%);
+  width:706px;
+  border-radius: 33px;
+  border: 1px solid #eaeaea;
+  background-color: #fff;
+  z-index: 10;
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: 2fr 6fr 2fr;
+  grid-template-rows: 58px;
+  align-items: center;
+
+  overflow: hidden;
+}
+
+.search-wrap .logo-wrap{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+
+.search-wrap img{
+  width:50px;
+}
+
+
+.search-wrap .input-wrap{
+  width:500px;
+
+}
+
+.search-wrap input{
+  display: block;
+  width: 100%;
+  height:100%;
+  font-size: 1.5rem;
+  outline: 0;
+
+}
+
+.search-wrap [type="submit"]{
+  border: none;
+  width:112px;
+  height: 100%;
+  background: #1f98e8;
+  color:#fff;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.logo{
+  display: inline-block;
+}
+.search-background input{
+  border: none;
+  line-height: 17px;
+}
+
+
+.lib-title{
+  color : #1f98e8;
+  font-size: 4rem;
+}
+
+
+
+/* youtubu area */
+.youtube-wrap h2{
+  text-align: left;
+  margin-top:50px ;
+}
+.youtube{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap:3rem;
+  }
+
+.each img{
+  width:100%;
+}
+
+
+.data-wrap{
+  display: grid;
+  grid-template-columns: 1fr;
+  border-top: 1px solid #505050;
+  padding:1rem 3rem;
+  margin-bottom: 1rem;
+  margin-top :1.2rem;
+  }
+
+  .data-wrap:nth-last-of-type(1){
+    border-bottom: 1px solid #e8e8e8;
+  }
+  
+
+  /* book 검색 결과 */
+  .book-wrap{
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    grid-template-rows: 230px;
+    gap :3rem;
+    border-top: 1px solid #eaeaea;
+    padding:2rem;
+    position: relative;
+  }
+  
+
+
+  .book-wrap:hover{
+    background-color: #f9f9f9;
+  }
+
+.book-info{
+  text-align: left;
+  padding-left: 1rem;
+}
+
+.no-bookname{
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+.author .genres .isbn13{
+  margin-bottom: 10px;
+  color :#7c7c7c;
+}
+
+.author{
+  color :rgb(58, 95, 201);
+  font-weight: 700;
+}
+.img-box{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.book-wrap img{
+  max-height: 100%;
+  border-radius: 6px;
+  box-shadow:  0 20px 60px rgba(0, 0, 0, 0.12);
+
+}
+
+
+
+/* scroll TOP button  */
+
+.top-scroll-btn {
+  position:fixed;
+  bottom : 3rem;
+  right: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height:100%;
+  border-radius: 50%;
+  width:60px;
+  height:60px;
+  background:#1f98e8;
+  color:#fff;
+  cursor: pointer;
+  border:none;
+  box-shadow: 0px 2px 7px 1px rgba(0, 0, 0, 0.294);
+}
+
+
+
