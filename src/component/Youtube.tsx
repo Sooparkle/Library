@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import react from "@vitejs/plugin-react-swc"
-import App from './App'
+
 
 
 const Youtube =() => {
