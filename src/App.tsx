@@ -10,7 +10,7 @@ import SearchArea from './component/SearchArea';
 
 function App() {
 
-  const [ guLibrary, setGuLibrary ] = useState([]);
+  const [ guLibrary, setGuLibrary ] = useState([null]);
   // const [title, setTitle] = useState('서울시');
   // const [searchKeyword, setSearchKeyword] = useState("");
   // const [formResult, setFormResult] = useState("");
@@ -110,8 +110,7 @@ function App() {
       <Youtube/>
 
       <div className="data-wrap">
-        {
-        guLibrary.map((item) => { 
+        {guLibrary !== null && guLibrary.map((item) => { 
           return(
             <BookList 
               key={item.doc.no}
