@@ -1,9 +1,5 @@
-import { useState, useEffect } from 'react'
-import react from "@vitejs/plugin-react-swc"
 
-
-
-const Youtube =() => {
+export const Youtube =() => {
 
   const [youtube, setYoutube] = useState([
     {id:1, youtubeName : "겨울서점", url:"https://www.youtube.com/@winterbooks/videos", img:"https://i.ytimg.com/vi/X_W7dZXeqQA/maxresdefault.jpg"},
@@ -35,4 +31,3 @@ const Youtube =() => {
   );
 }
 
-export default Youtube
