@@ -1,7 +1,8 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function BookList ({libraryList}) {
-  console.log("Booklist", libraryList)
+  const [ naverBook, setNaverBook ] = useState([])  
   const navigate  = useNavigate();
 
   const handelOnClikcDetail = (data)=>{
