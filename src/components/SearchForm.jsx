@@ -58,15 +58,16 @@ export default function SearchForm ({ setTitle, setLibraryList }) {
           }
         })
         .then((data)=>{
-          if(data.length <= 0) {
+          if(data.length == 0) {
             alert(`${inputRef.current.value}일치하는 데이터가 없습니다. '-구'를 명확하게 작성해 주세요.`);
+            setInputKeyword("");
+            return;
           } else {
             const jsonData = data.response.docs;
             console.log(jsonData);
             setLibraryList(jsonData);
           }
-        }
-        )
+        })
         setInputKeyword("");
       }
     }
