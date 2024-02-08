@@ -35,38 +35,54 @@ export default function SearchForm ({setLibraryList, setTitle}) {
     setSearchValue(searchRef.current.value);
   };
 
-  const handleOnSubmit = (e)=>{
+
+  // modify Library API fetch with async 2024-02-08 
+  const handleOnSubmit = async (e)=>{
     e.preventDefault();
     setTitle(searchRef.current.value);
-    fetchData(searchRef.current.value);
-    console.log("submit")
-  }
-
-  const fetchData = (keyword)=>{
-    console.log("fetch")
+  
+    try {
+    console.log("Try fetch")
     // keyword가 글자가 아니면 다시 검색하라고 표시 하는 방법 필요.
     for(var i = 0; i < library.length; i++){
-      if(keyword == library[i].libName){
-        console.log("for loop")
+      if(searchRef.current.value == library[i].libName){
+        console.log("for here, loop starts")
         const selectedCode = library[i].value;
-        const url = `http://data4library.kr/api/loanItemSrchByLib?authKey=43d7efdc5d7f99a3be907ecac62d3212026fb810e793f19e56fb0b5a390c93f8&dtl_region=${selectedCode}&startDt=2023-01-01&endDt=2023-12-31&pageSize=50&format=json`
-        fetch(url)
-        .then((response)=>{
+        const urlParams = new URLSearchParams({
+          authKey : '43d7efdc5d7f99a3be907ecac62d3212026fb810e793f19e56fb0b5a390c93f8',
+          dtl_region: selectedCode,
+          startDt: '2023-01-01',
+          endDt: '2023-12-31',
+          pageSize: '50',
+          format: 'json'
+        });
+
+        const libraryUrl= new URL(`http://data4library.kr/api/loanItemSrchByLib?`);
+        libraryUrl.search = urlParams.toString();
+        console.log("Library API loge",libraryUrl, libraryUrl.searchParams) ;
+        
+        
+        const response = await fetch(libraryUrl.toString());
           if(!response.ok){
-            console.log("서버 통신 실패!");
-          } else {
-            return response.json();
+            throw new Error(`Library API failed ${response.status}`);
           }
-        }).then((data)=>{
+          
+          const data = await response.json();
+
           const jsonData = data.response.docs;
           setLibraryList(jsonData);
           console.log(jsonData);
-        })
+          
+          const stringifiedData = JSON.stringify(jsonData);
+          localStorage.setItem(`${searchRef.current.value}`, stringifiedData);
+
+          searchRef.current.value = null
       }
     }
-    // setSearchValue(null);
-    searchRef.current.value = null
+  } catch (error){
+    console.log("Error fetching data from Public Library", error);
   }
+}
 
   return(
     <form onSubmit={handleOnSubmit}>
