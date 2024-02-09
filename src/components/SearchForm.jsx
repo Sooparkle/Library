@@ -40,7 +40,7 @@ export default function SearchForm ({setLibraryList, setTitle}) {
   const handleOnSubmit = async (e)=>{
     e.preventDefault();
     setTitle(searchRef.current.value);
-  
+
     try {
     console.log("Try fetch")
     // keyword가 글자가 아니면 다시 검색하라고 표시 하는 방법 필요.
@@ -53,36 +53,35 @@ export default function SearchForm ({setLibraryList, setTitle}) {
           dtl_region: selectedCode,
           startDt: '2023-01-01',
           endDt: '2023-12-31',
-          pageSize: '50',
+          pageSize: '20',
           format: 'json'
         });
 
         const libraryUrl= new URL(`http://data4library.kr/api/loanItemSrchByLib?`);
         libraryUrl.search = urlParams.toString();
-        console.log("Library API loge",libraryUrl, libraryUrl.searchParams) ;
-        
+        console.log("Library API log",libraryUrl, libraryUrl.searchParams) ;
         
         const response = await fetch(libraryUrl.toString());
           if(!response.ok){
             throw new Error(`Library API failed ${response.status}`);
           }
           
-          const data = await response.json();
+        const data = await response.json();
 
-          const jsonData = data.response.docs;
-          setLibraryList(jsonData);
-          console.log(jsonData);
-          
-          const stringifiedData = JSON.stringify(jsonData);
-          localStorage.setItem(`${searchRef.current.value}`, stringifiedData);
-
-          searchRef.current.value = null
+        const jsonData = data.response.docs;
+        setLibraryList(jsonData);
+        
+        const stringifiedData = JSON.stringify(jsonData);
+        sessionStorage.setItem(`${searchRef.current.value}`, stringifiedData);
+        
+        setSearchValue("");
+        searchRef.current.value = null
       }
     }
-  } catch (error){
-    console.log("Error fetching data from Public Library", error);
+    } catch (error){
+      console.log("Error fetching data from Public Library", error);
+    }
   }
-}
 
   return(
     <form onSubmit={handleOnSubmit}>

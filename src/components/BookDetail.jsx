@@ -7,7 +7,7 @@ export default function BookDetail () {
   const apiNaver = async (param) =>{
     try {
       const naverUrl = new URL('https://openapi.naver.com/v1/search/book.json');
-      naverUrl.searchParams.set('query', param);b
+      naverUrl.searchParams.set('query', param);
 
       const options={
         method :'GET',
@@ -31,9 +31,9 @@ export default function BookDetail () {
     }
   }
 
-  useEffect(()=>{
-    apiNaver(`${state.bookname}`)
-  }, [])
+  // useEffect(()=>{
+  //   apiNaver(`${state.bookname}`)
+  // }, [])
 
 
   return(
