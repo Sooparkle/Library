@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import NaverApi from "./NaverApi";
+import NaverApi from "./NaverApi";
 
 export default function BookList({ title }) {
   const [naverBook, setNaverBook] = useState([]);
@@ -65,13 +65,14 @@ export default function BookList({ title }) {
         sessionDatas.map((book) => {
           const data = book.doc;
           return (
-            <div key={data.no}>
+            <div className="book-wrap" key={data.no}>
               <NaverApi book={data}/>
               <div className="book-brief" >
-                <div onClick={()=>{handleOnClickDetial(data)}}>책 이름 : {data.bookname}</div>
-                <div className="">{data.authors}</div>
-                <div className="">{data.isbn13}</div>
-                <div className="">{data.class_nm}</div>
+                <div className="name" onClick={()=>{handleOnClickDetial(data)}}>책 이름 : {data.bookname}</div>
+                <div className="author">{data.authors}</div>
+                <div className="class">{data.class_nm}</div>
+                <div className="isbn13">{data.isbn13}</div>
+                <button type="button" >상세보기</button>
               </div>
             </div>
           );

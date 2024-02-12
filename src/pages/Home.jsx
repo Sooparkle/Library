@@ -11,15 +11,16 @@ export default function Home () {
       <div className="search-background">
         <div className="search-wrap">
           <h1><span>{title}</span> 우리동네 도서관 베스트 도서</h1>
+          <SearchForm setLibraryList={setLibraryList} setTitle={setTitle}/>
         </div>
-        <SearchForm setLibraryList={setLibraryList} setTitle={setTitle}/>
       </div>
 
-      <div className="book-wrap">
+      <div className="content">
         {
           libraryList && <BookList libraryList={libraryList} title={title} />
         }
       </div>
+
     </>
   )
 }
