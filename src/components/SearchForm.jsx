@@ -47,9 +47,22 @@ export default function SearchForm ({ setTitle, setLibraryList }) {
     for(var i =0; i < library.length; i++){
       if  (keyword==library[i].libName){
         const selectedCode = library[i].value;
-        const url = `http://data4library.kr/api/loanItemSrchByLib?authKey=43d7efdc5d7f99a3be907ecac62d3212026fb810e793f19e56fb0b5a390c93f8&dtl_region=${selectedCode}&startDt=2023-01-01&endDt=2023-12-31&pageSize=50&format=json`
+
+        const urlParams = new URLSearchParams({
+          authKey : '43d7efdc5d7f99a3be907ecac62d3212026fb810e793f19e56fb0b5a390c93f8',
+          dtl_region: selectedCode,
+          startDt: '2023-01-01',
+          endDt: '2023-12-31',
+          pageSize: '20',
+          format: 'json'
+        });
+
+        const url =new URL(`http://data4library.kr/api/loanItemSrchByLib?`);
+        url.search = urlParams.toString();
+
+        const libraryUrl = url.toString();
         
-        fetch(url)
+        fetch(libraryUrl)
         .then((response)=>{
           if(!response.ok){
             console.log("서버와 통신에 실패 했습니다.");
@@ -74,7 +87,7 @@ export default function SearchForm ({ setTitle, setLibraryList }) {
   };
 
   return(
-    <form onSubmit={handleOnSubmit}>
+    <form className="form" onSubmit={handleOnSubmit}>
       <input 
         type="text"
         ref={inputRef}
