@@ -20,40 +20,40 @@ export default function BookList({ title }) {
   const sessionDatas = JSON.parse(sessionDataString);
 
 
-  const naverDatas = async ()=>{
+  // const naverDatas = async ()=>{
 
-    const naverData = {};
-    for (const book of sessionDatas){
+  //   const naverData = {};
+  //   for (const book of sessionDatas){
 
-    }
-    try{
-      const naver = new URL('https://openapi.naver.com/v1/search/book.json');
-      naver.searchParams.set('query', title);
+  //   }
+  //   try{
+  //     const naver = new URL('');
+  //     naver.searchParams.set('query', title);
 
-      const options ={
-        method : 'GET',
-        headers : {
-          'Content-Type': 'application/json',
-          'X-Naver-Client-Id': 'Hl2fOb0CX1D4t139JtKN',
-          'X-Naver-Client-Secret': 'N9lhUBJtQT'
-        }
-      };
+  //     const options ={
+  //       method : 'GET',
+  //       headers : {
+  //         'Content-Type': 'application/json',
+  //         'X-Naver-Client-Id': 'Hl2fOb0CX1D4t139JtKN',
+  //         'X-Naver-Client-Secret': 'N9lhUBJtQT'
+  //       }
+  //     };
 
-      const response = await fetch(naver.toString(), options);
+  //     const response = await fetch(naver.toString(), options);
 
-      if(!response.ok){
-        throw new Error(`Naver API failed ${response.status}`)
-      }
+  //     if(!response.ok){
+  //       throw new Error(`Naver API failed ${response.status}`)
+  //     }
 
-      const data = await response.json();
-      console.log("BookList naver", data)
-      setNaverBook(data);
+  //     const data = await response.json();
+  //     console.log("BookList naver", data)
+  //     setNaverBook(data);
       
 
-    } catch (error) {
-      console.log(`Naver API failed at BookList ${response.status}`)
-    }
-  }
+  //   } catch (error) {
+  //     console.log(`Naver API failed at BookList ${response.status}`)
+  //   }
+  // }
 
   // useEffect(()=>{
   //   naverDatas()
@@ -66,7 +66,8 @@ export default function BookList({ title }) {
           const data = book.doc;
           return (
             <div className="book-wrap" key={data.no}>
-              <NaverApi book={data}/>
+              <img src={data.bookImageURL} />
+              {/* <NaverApi book={data}/> */}
               <div className="book-brief" >
                 <div className="name" onClick={()=>{handleOnClickDetial(data)}}>책 이름 : {data.bookname}</div>
                 <div className="author">{data.authors}</div>
