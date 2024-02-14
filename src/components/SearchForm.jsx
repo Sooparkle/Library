@@ -77,7 +77,9 @@ export default function SearchForm ({ setTitle, setLibraryList }) {
             return;
           } else {
             const jsonData = data.response.docs;
-            console.log(jsonData);
+            
+            const stringifiedData = JSON.stringify(jsonData);
+            sessionStorage.setItem(`${keyword}`, stringifiedData )
             setLibraryList(jsonData);
           }
         })

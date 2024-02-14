@@ -8,6 +8,7 @@ export default function Home (){
 
   return(
     <>
+    <h2 className="home-title">검색</h2>
       <div className="search-background">
         <div className="search-wrap">
           <h1><span className="search-title">{title}</span><br/>우리동네 도서관 베스트 도서</h1>

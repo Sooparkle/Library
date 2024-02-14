@@ -13,27 +13,30 @@ export default function BookList ({libraryList, title}) {
     );
   }
 
+  // call data from sessionStorage
+
+const sessionDataString = sessionStorage.getItem(`${title}`);
+const sessionDatas = JSON.parse(sessionDataString);
+
   return (
     <>
-      {
-      libraryList.map((book)=>{
-        const data = book.doc
-        return(
-          <div className="book-wrap" key={data.no}>
-            {/* <img src={data.bookImageURL} alt={data.bookname} /> */}
-            <NaverApi book={book} title={title} />
-            <div className="book-brief">
-              <div className="name" onClick={()=> handleOnClickDetail(data)} >{data.no}. {data.bookname}</div>
-              <div >{data.authors}</div>
-              <div>{data.class_nm}</div>
-              <div>{data.isbn13}</div>
-              <button type="button">상세보기</button>
+      {(sessionDatas &&
+        sessionDatas.map((book) => {
+          const data = book.doc;
+          return (
+            <div className="book-wrap" key={data.no}>
+              <img src={data.bookImageURL} />
+              {/* <NaverApi book={data}/> */}
+              <div className="book-brief" >
+                <div className="name">책 이름 : {data.bookname}</div>
+                <div className="author">{data.authors}</div>
+                <div className="class">{data.class_nm}</div>
+                <div className="isbn13">{data.isbn13}</div>
+                <button type="button"  onClick={()=>{handleOnClickDetail(data)}}>상세보기</button>
+              </div>
             </div>
-          </div>
-        )
-      })
-      }
+          );
+        })) || <div>검색된 결과가 없습니다. 우리 '-구' 검색해 보세요.</div>}
     </>
-    
   )
 }

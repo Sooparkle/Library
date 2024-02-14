@@ -13,11 +13,11 @@ function MapwithToggle ({ place, onPlaceChange}) {
 
   return(
     <>
-    <div>Local page</div>
+    <h2 className="local-title">Local page</h2>
     { 
     (selectedPlace && <KakaoMap place={selectedPlace} />)
 
-     || <div className="empty-map">검색된 결과가 없습니다. 우리 '-구' 검색해 보세요.</div>
+    || <div className="empty-map">검색된 결과가 없습니다. 우리 '-구' 검색해 보세요.</div>
     } 
       <div className="local">
         <button onClick={()=> handleToggleClick('종로구')}>종로구</button>
