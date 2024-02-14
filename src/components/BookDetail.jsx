@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import { useLocation, useParams } from "react-router-dom"
 import { NavigateContext } from "./WithNavigate";
-// import { Chart } from "react-google-charts";
+import { Chart } from "react-google-charts";
 
 
 export const BookDetail = ()=>{
@@ -37,22 +37,35 @@ const handleGoBack = () => {
 
       const data = await response.json();
     
-      console.log("Book Detail data done", data)
+      console.log("Book Detail data done", data.response.datail)
       console.log("Book Detail data.response.loanInfo[2] done", data.response.loanInfo[2])
 
       const detail = data.response.detail[0].book;
       const loanInfo = data.response.loanInfo[2].ageResult;
   
-      const localStorageDataString = sessionStorage(`${state.bookname}`,loanInfo )
-      const localStorageData = JSON.parse(localStorageDataString)
-      
-      console.log("Detail session", localStorageData);
       console.log("book Detail",detail);
       console.log("age [0]", loanInfo);
+        
+      const localStorageDataString = sessionStorage.setItem(`${state.bookname}`, JSON.stringify(loanInfo));
+
+      // Later when retrieving:
+      const storedObject = JSON.parse(sessionStorage.getItem(state.bookname));
+
       setBookInfo(detail);
-      setLoanInfo(loanInfo);
+      setLoanInfo(storedObject);
 
+      console.log("get out of session",storedObject )
 
+      const datas = [
+        ["연령", "권수"]
+        [loanInfo[0].age.name, loanInfo[0].age.loanCnt ],
+        // [`${loanInfo[1].age.name}`, loanInfo[1].age.loanCnt ],
+        // [`${loanInfo[2].age.name}`, loanInfo[2].age.loanCnt ],
+        // [`${loanInfo[3].age.name}`, loanInfo[3].age.loanCnt ],
+        // [`${loanInfo[4].age.name}`, loanInfo[4].age.loanCnt ],
+        // [`${loanInfo[5].age.name}`, loanInfo[5].age.loanCnt ],
+        // [`${loanInfo[6].age.name}`, loanInfo[6].age.loanCnt ],
+      ];
     } catch (error) {
       console.error("Book Detail API failed", error);
     }
@@ -62,34 +75,9 @@ const handleGoBack = () => {
     libraryBookDetail();
   }, [])
 
-
-  // const data = [
-  //   { label: `${loanInfo[0].age.name}`, value: loanInfo[0].age.loanCnt },
-  //   { label: `${loanInfo[1].age.name}`, value: loanInfo[1].age.loanCnt },
-  //   { label: `${loanInfo[2].age.name}`, value: loanInfo[2].age.loanCnt },
-  //   { label: `${loanInfo[3].age.name}`, value: loanInfo[3].age.loanCnt },
-  //   { label: `${loanInfo[4].age.name}`, value: loanInfo[4].age.loanCnt },
-  //   { label: `${loanInfo[5].age.name}`, value: loanInfo[5].age.loanCnt },
-  //   { label: `${loanInfo[6].age.name}`, value: loanInfo[6].age.loanCnt },
-  // ];
-
-  // const MyPieChart = () => {
-  //   return (
-  //     <Box sx={{ width: '500px', height: '400px' }}>
-  //       <PieChart
-  //         data={data}
-  //         chartType="PieChart"
-  //         width="100%"
-  //         height="400px"
-  //         options={{
-  //           title: 'My Pie Chart',
-  //         }}
-  //       />
-  //     </Box>
-  //   );
-  // }
-
-
+  const options = {
+    title: "My Daily Activities",
+  };
 
 
   return(
@@ -115,7 +103,14 @@ const handleGoBack = () => {
         <div className="detail-body">
           <div>차트</div>
           <div className="chart1">
-            {/* {(loanInfo && <MyPieChart />)  } */}
+            {(loanInfo && 
+                  <Chart
+                  chartType="PieChart"
+                  data={datas}
+                  options={options}
+                  width={"100%"}
+                  height={"400px"}
+                />)  }
 
           </div>
           </div>
