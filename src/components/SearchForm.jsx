@@ -42,7 +42,7 @@ export default function SearchForm ({ setTitle, setLibraryList }) {
     fetchData(inputRef.current.value);
   };
 
-  const fetchData = (keyword)=>{
+  const fetchData = async (keyword)=>{
     console.log("fetch")
     for(var i =0; i < library.length; i++){
       if  (keyword==library[i].libName){
@@ -57,12 +57,14 @@ export default function SearchForm ({ setTitle, setLibraryList }) {
           format: 'json'
         });
 
-        const url =new URL(`http://data4library.kr/api/loanItemSrchByLib?`);
+        const url =new URL(`https://data4library.kr/api/loanItemSrchByLib?`);
         url.search = urlParams.toString();
 
         const libraryUrl = url.toString();
         
-        fetch(libraryUrl)
+  fetch(libraryUrl)
+
+    
         .then((response)=>{
           if(!response.ok){
             console.log("서버와 통신에 실패 했습니다.");

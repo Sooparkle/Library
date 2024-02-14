@@ -14,6 +14,7 @@ export default function Home (){
           <h1><span className="search-title">{title}</span><br/>우리동네 도서관 베스트 도서</h1>
           <SearchForm setTitle={setTitle} setLibraryList={setLibraryList} />
         </div>
+        <div className="notice">현재 서울시에 '-구'만 검색 가능합니다. <br/>예시) 종로구, 성동구 등</div>
       </div>
 
       <div className="content" >

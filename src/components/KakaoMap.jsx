@@ -5,17 +5,21 @@ const {kakao} = window;
 console.log("KaKaoMap page")
 
 export default function  KakaoMap ({ place  }) {
+
+  console.log("place loding", place)
+  
     useEffect(()=>{
+      console.log("KAKAo useEffect", place)
       const container = document.getElementById('myMap');
         const options ={
           center : new kakao.maps.LatLng(37.577613287593515, 126.97689447211518),
           level : 5
         };
         const map = new kakao.maps.Map(container, options);
-
         const ps = new kakao.maps.services.Places();
+        console.log("KAKAo ps 시작", place)
 
-        ps.keywordSearch(place, placesSearchCB); 
+        ps.keywordSearch(`${place}`, placesSearchCB); 
 
         function placesSearchCB (data, status) {
             if (status === kakao.maps.services.Status.OK) {
@@ -31,13 +35,8 @@ export default function  KakaoMap ({ place  }) {
             } 
         }
 
-        // function displayMarker(place) {
-        //     let marker = new kakao.maps.Marker({
-        //         map: map,
-        //         position: new kakao.maps.LatLng(props.place.y, props.place.x) 
-        //     });
-        // }
-    }, [props.place])
+
+    }, [])
 
 
     // 

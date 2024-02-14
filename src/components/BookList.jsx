@@ -36,7 +36,7 @@ const sessionDatas = JSON.parse(sessionDataString);
               </div>
             </div>
           );
-        })) || <div>검색된 결과가 없습니다. 우리 '-구' 검색해 보세요.</div>}
+        })) || <div>검색된 결과가 없습니다. 서울시 '-구' 검색해 보세요.</div>}
     </>
   )
 }

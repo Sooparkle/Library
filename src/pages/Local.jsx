@@ -1,24 +1,27 @@
 import  KakaoMap from "../components/KakaoMap";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Local () {
-  const [ selectedPlace, setSelectedPlace ] = useState('');
+  const [ selectedPlace, setSelectedPlace ] = useState('광화문');
+
 
   const handleToggleClick = (newPlace) =>{
     setSelectedPlace(newPlace);
   }
 
-function MapwithToggle ({ place, onPlaceChange}) {
-}
+  useEffect(()=>{
+  handleToggleClick();  
+  },[selectedPlace])
+
 
   return(
     <>
-    <h2 className="local-title">Local page</h2>
-    { 
+    <h2 className="local-title">지역 모임</h2>
+    <KakaoMap />
+    {/* { 
     (selectedPlace && <KakaoMap place={selectedPlace} />)
-
     || <div className="empty-map">검색된 결과가 없습니다. 우리 '-구' 검색해 보세요.</div>
-    } 
+    }  */}
       <div className="local">
         <button onClick={()=> handleToggleClick('종로구')}>종로구</button>
         <button onClick={()=> handleToggleClick('중구')}>중구</button>

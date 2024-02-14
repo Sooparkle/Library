@@ -119,6 +119,15 @@ font-weight: bold;
   color : var(--strong-color)
   }
 
+  .notice{
+    position: absolute;
+    bottom: 8%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    font-size: 11px;
+    color:#fff
+  }
+
   h1{
     color : #fff
   }
@@ -271,9 +280,11 @@ font-weight: bold;
 }
 
 .local{
+  margin-top :100px;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 1rem;
 
 }
+
 

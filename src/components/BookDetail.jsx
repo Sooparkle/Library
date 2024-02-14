@@ -1,11 +1,8 @@
 import { useEffect, useState, useContext } from "react";
 import { useLocation, useParams } from "react-router-dom"
 import { NavigateContext } from "./WithNavigate";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import { Doughnut } from 'react-chartjs-2';
+// import { Chart } from "react-google-charts";
 
-
-ChartJS.register(ArcElement, Tooltip, Legend);
 
 export const BookDetail = ()=>{
 const [ bookinfo, setBookInfo ] = useState([]);
@@ -16,8 +13,6 @@ const [ loanInfo, setLoanInfo ] =useState([])
 const handleGoBack = () => {
   navigate(-1);
 };
-
-
 
   const libraryBookDetail = async () =>{
     try{
@@ -31,7 +26,7 @@ const handleGoBack = () => {
         format : 'json'
       });
 
-      const bookDetailUrl = new URL(`http://data4library.kr/api/srchDtlList?`);
+      const bookDetailUrl = new URL(`https://data4library.kr/api/srchDtlList?`);
       bookDetailUrl.search = bookDetailUrlParams.toString();
 
       const response = await fetch(bookDetailUrl.toString());
@@ -48,7 +43,10 @@ const handleGoBack = () => {
       const detail = data.response.detail[0].book;
       const loanInfo = data.response.loanInfo[2].ageResult;
   
-  
+      const localStorageDataString = sessionStorage(`${state.bookname}`,loanInfo )
+      const localStorageData = JSON.parse(localStorageDataString)
+      
+      console.log("Detail session", localStorageData);
       console.log("book Detail",detail);
       console.log("age [0]", loanInfo);
       setBookInfo(detail);
@@ -62,55 +60,36 @@ const handleGoBack = () => {
 
   useEffect(()=>{
     libraryBookDetail();
-    
   }, [])
 
 
+  // const data = [
+  //   { label: `${loanInfo[0].age.name}`, value: loanInfo[0].age.loanCnt },
+  //   { label: `${loanInfo[1].age.name}`, value: loanInfo[1].age.loanCnt },
+  //   { label: `${loanInfo[2].age.name}`, value: loanInfo[2].age.loanCnt },
+  //   { label: `${loanInfo[3].age.name}`, value: loanInfo[3].age.loanCnt },
+  //   { label: `${loanInfo[4].age.name}`, value: loanInfo[4].age.loanCnt },
+  //   { label: `${loanInfo[5].age.name}`, value: loanInfo[5].age.loanCnt },
+  //   { label: `${loanInfo[6].age.name}`, value: loanInfo[6].age.loanCnt },
+  // ];
+
+  // const MyPieChart = () => {
+  //   return (
+  //     <Box sx={{ width: '500px', height: '400px' }}>
+  //       <PieChart
+  //         data={data}
+  //         chartType="PieChart"
+  //         width="100%"
+  //         height="400px"
+  //         options={{
+  //           title: 'My Pie Chart',
+  //         }}
+  //       />
+  //     </Box>
+  //   );
+  // }
 
 
-
-  // const data = {
-  //   labels: [
-  //     `${loanInfo[0].age.name}`, 
-  //     `${loanInfo[1].age.name}`, 
-  //     `${loanInfo[2].age.name}`, 
-  //     `${loanInfo[3].age.name}`, 
-  //     `${loanInfo[4].age.name}`, 
-  //     `${loanInfo[5].age.name}`, 
-  //     `${loanInfo[6].age.name}`, 
-  //   ],
-  //   datasets: [
-  //     {
-  //       label: 'My Chart',
-  //       data: [
-  //         loanInfo[0].age.loanCnt, 
-  //         loanInfo[1].age.loanCnt, 
-  //         loanInfo[2].age.loanCnt, 
-  //         loanInfo[3].age.loanCnt,
-  //         loanInfo[4].age.loanCnt,
-  //         loanInfo[5].age.loanCnt,
-  //         loanInfo[6].age.loanCnt,
-  //       ],
-  //       backgroundColor: [
-  //         'red', 
-  //         'blue',
-  //         'yellow', 
-  //         'green',
-  //         'black',
-  //         'grey',
-  //         'teal'
-  //       ],
-  //     },
-  //   ],
-  // };
-
-
-  const MyDoughnutChart = () => {
-    return (
-      <Doughnut data={data} options={{}}  />
-    );
-  };
-  
 
 
   return(
@@ -136,7 +115,7 @@ const handleGoBack = () => {
         <div className="detail-body">
           <div>차트</div>
           <div className="chart1">
-            {/* {(loanInfo && <Doughnut data={data} options={{}} style={{ width: '400px', height: '400px'}}/>)  } */}
+            {/* {(loanInfo && <MyPieChart />)  } */}
 
           </div>
           </div>
