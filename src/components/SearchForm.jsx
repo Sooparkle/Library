@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import { DatePicker } from "./DataPicker";
 
 export default function SearchForm ({ setTitle, setLibraryList }) {
   const [ inputKeyword, setInputKeyword ] = useState("");
@@ -98,6 +99,7 @@ export default function SearchForm ({ setTitle, setLibraryList }) {
         value={inputKeyword}
         onChange={handleOnChange}
       />
+      <DatePicker />
       <button type="submit" >검색</button>
     </form>
   );

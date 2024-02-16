@@ -1,9 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom"
 import NaverApi from "./NaverApi";
 
 export default function BookList ({libraryList, title}) {
 
+  const [isFalse, setIsFalse] = useState(false);
   const navigate = useNavigate();
 
   const handleOnClickDetail = (data)=>{
@@ -13,8 +14,10 @@ export default function BookList ({libraryList, title}) {
     );
   }
 
-  // call data from sessionStorage
 
+
+
+  // call data from sessionStorage
 const sessionDataString = sessionStorage.getItem(`${title}`);
 const sessionDatas = JSON.parse(sessionDataString);
 

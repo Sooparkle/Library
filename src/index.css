@@ -216,7 +216,7 @@ font-weight: bold;
 .detail-header{
   width:0 auto;
   margin: 0 3rem;
-
+  padding-bottom: 3rem;
 
   margin-top: 100px;
 }
@@ -234,6 +234,7 @@ font-weight: bold;
 .detail-header .detail-name{
   font-size: 1.4rem;
   margin-bottom: 2rem;
+  font-weight: bold;
 }
 
 .detail-header .detail-info{
@@ -254,7 +255,15 @@ font-weight: bold;
   grid-template-columns:  1fr, 1fr;
 }
 
+.detail-button{
+  margin-top : 100px;
+  margin-bottom: 100px;
+}
 
+.detail-button:hover{
+    background-color: var(--strong-color);
+    color : #fff
+}
 
 
 

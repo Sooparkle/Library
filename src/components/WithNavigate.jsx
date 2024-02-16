@@ -10,17 +10,17 @@ const NavigationProvider = ({children}) =>{
     navigate(-1);
   };
 
-  const handelGoForward = () => {
+  const handleGoForward = () => {
     navigate(1);
   };
 
   return(
-    <NavigateContext.Provider 
-      value={ {navigate, handleGoBack, handelGoForward} }
-    >
+    <NavigateContext.Provider  value={ {navigate, handleGoBack, handleGoForward} } >
       {children}
-      </NavigateContext.Provider>
+    </NavigateContext.Provider>
   )
 }
 
 export { NavigateContext, NavigationProvider }
+
+

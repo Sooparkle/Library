@@ -31,6 +31,7 @@ const handleGoBack = () => {
 
       const response = await fetch(bookDetailUrl.toString());
       console.log("Book Detail URL with queris has been sented")
+
       if(!response.ok){
         throw new Error (`Book Detail API failed ${response.status}`)
       }
@@ -43,29 +44,19 @@ const handleGoBack = () => {
       const detail = data.response.detail[0].book;
       const loanInfo = data.response.loanInfo[2].ageResult;
   
-      console.log("book Detail",detail);
-      console.log("age [0]", loanInfo);
         
-      const localStorageDataString = sessionStorage.setItem(`${state.bookname}`, JSON.stringify(loanInfo));
-
+      const t = sessionStorage.setItem(`${state.bookname}`, JSON.stringify(loanInfo));
       // Later when retrieving:
       const storedObject = JSON.parse(sessionStorage.getItem(state.bookname));
+      
 
       setBookInfo(detail);
       setLoanInfo(storedObject);
 
-      console.log("get out of session",storedObject )
+      console.log("book Detail",detail.description);
+      console.log("age [0]", loanInfo);
 
-      const datas = [
-        ["연령", "권수"]
-        [loanInfo[0].age.name, loanInfo[0].age.loanCnt ],
-        // [`${loanInfo[1].age.name}`, loanInfo[1].age.loanCnt ],
-        // [`${loanInfo[2].age.name}`, loanInfo[2].age.loanCnt ],
-        // [`${loanInfo[3].age.name}`, loanInfo[3].age.loanCnt ],
-        // [`${loanInfo[4].age.name}`, loanInfo[4].age.loanCnt ],
-        // [`${loanInfo[5].age.name}`, loanInfo[5].age.loanCnt ],
-        // [`${loanInfo[6].age.name}`, loanInfo[6].age.loanCnt ],
-      ];
+
     } catch (error) {
       console.error("Book Detail API failed", error);
     }
@@ -75,10 +66,8 @@ const handleGoBack = () => {
     libraryBookDetail();
   }, [])
 
-  const options = {
-    title: "My Daily Activities",
-  };
 
+  console.log("OUTSIDE", )
 
   return(
     <>
@@ -97,20 +86,20 @@ const handleGoBack = () => {
             </div>
           </div>
         </div>
-
-        <button className="detail-button" onClick={handleGoBack}>뒤로가기</button>
+        <hr/>
+        <button className="detail-button" onClick={handleGoBack}>다시 검색하기</button>
 
         <div className="detail-body">
-          <div>차트</div>
           <div className="chart1">
-            {(loanInfo && 
+
+            {/* {(loanInfo && 
                   <Chart
                   chartType="PieChart"
                   data={datas}
                   options={options}
                   width={"100%"}
                   height={"400px"}
-                />)  }
+                />)  } */}
 
           </div>
           </div>
