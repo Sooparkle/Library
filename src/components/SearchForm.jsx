@@ -41,63 +41,137 @@ export default function SearchForm ({ setTitle, setLibraryList }) {
     e.preventDefault();
     setTitle(inputRef.current.value);
     fetchData(inputRef.current.value);
+    // fetchNode(inputRef.current.value)
   };
 
+
+  // Node data check function logic
+// const fetchNode = async (keyword)=>{
+//   console.log(keyword)
+
+//   const options = {
+//     method : "POST",
+//     headers : {
+//       "Content-Type" : "application/json"
+//     },
+//     body: JSON.stringify({title : keyword})
+//   }
+//   const url = new URL("http://localhost:3000/api");
+
+//   const response = await   fetch(url.toString(), options);
+//   if(!response.ok){
+//     throw new Error (`book Server not OK ${response.status}` )
+//   } 
+// const data = await response.json();
+
+// console.log("Naver Json data", data)
+
+// }
+
+
+
   const fetchData = async (keyword)=>{
-    console.log("fetch")
-    for(var i =0; i < library.length; i++){
-      if  (keyword==library[i].libName){
-        const selectedCode = library[i].value;
 
-        const urlParams = new URLSearchParams({
-          authKey : '43d7efdc5d7f99a3be907ecac62d3212026fb810e793f19e56fb0b5a390c93f8',
-          dtl_region: selectedCode,
-          startDt: '2023-01-01',
-          endDt: '2023-12-31',
-          pageSize: '20',
-          format: 'json'
-        });
+    try{
+      for(let i = 0; 0 < library.length; i++){
+        console.log("SearchForm TRY starts! ")
+        if(keyword ==library[i].libName){
+          const selectedCode = library[i].value;
 
-        const url =new URL(`https://data4library.kr/api/loanItemSrchByLib?`);
-        url.search = urlParams.toString();
+          const libraryApi = new URL('https://data4library.kr/api/loanItemSrchByLib?');
+          libraryApi.searchParams.set("authKey", '43d7efdc5d7f99a3be907ecac62d3212026fb810e793f19e56fb0b5a390c93f8')
+          libraryApi.searchParams.set("dtl_region", selectedCode);
+          libraryApi.searchParams.set("startDt", '2023-01-01');
+          libraryApi.searchParams.set("endDt",'2023-12-31' )
+          libraryApi.searchParams.set("pageSize", "10");
+          libraryApi.searchParams.set("format", 'json');
 
-        const libraryUrl = url.toString();
+          const options= {
+            method : "GET",
+            headers : {
+              "Content-Type" : "application/json",
+            }
+          };
+
+          const response = await fetch(libraryApi.toString(), options);
+          if(!response.ok){
+            throw new Error(`Library Fetch failed at SearchForm ${response.status}`);
+          }
+
+          const data = await response.json();
+          console.log("Data response has been completed", data);
+          const jsonData = data.response.docs;
+
+          const stringifiedData = JSON.stringify(jsonData);
+          sessionStorage.setItem(`${keyword}`, stringifiedData )
+          setLibraryList(jsonData);
+        }
+        // else{
+        //   console.log("검색할 수 없는 서울시 입니다.")
+        // };
+      };
+
+    }
+    catch(error){
+      throw new Error (`The API data doesn't be requested bc of ${error}`)
+    }
+    finally{
+      setInputKeyword("");
+    }
+
+  //   for(var i =0; i < library.length; i++){
+  //     if  (keyword==library[i].libName){
+  //       const selectedCode = library[i].value;
+
+  //       const urlParams = new URLSearchParams({
+  //         authKey : '43d7efdc5d7f99a3be907ecac62d3212026fb810e793f19e56fb0b5a390c93f8',
+  //         dtl_region: selectedCode,
+  //         startDt: '2023-01-01',
+  //         endDt: '2023-12-31',
+  //         pageSize: '20',
+  //         format: 'json'
+  //       });
+
+  //       const url =new URL(`https://data4library.kr/api/loanItemSrchByLib?`);
+  //       url.search = urlParams.toString();
+
+  //       const libraryUrl = url.toString();
         
-  fetch(libraryUrl)
+  // fetch(libraryUrl)
 
     
-        .then((response)=>{
-          if(!response.ok){
-            console.log("서버와 통신에 실패 했습니다.");
-          } else {
-            return response.json();
-          }
-        })
-        .then((data)=>{
-          if(data.length == 0) {
-            alert(`${inputRef.current.value}일치하는 데이터가 없습니다. '-구'를 명확하게 작성해 주세요.`);
-            setInputKeyword("");
-            return;
-          } else {
-            const jsonData = data.response.docs;
+  //       .then((response)=>{
+  //         if(!response.ok){
+  //           console.log("서버와 통신에 실패 했습니다.");
+  //         } else {
+  //           return response.json();
+  //         }
+  //       })
+  //       .then((data)=>{
+  //         if(data.length == 0) {
+  //           alert(`${inputRef.current.value}일치하는 데이터가 없습니다. '-구'를 명확하게 작성해 주세요.`);
+  //           setInputKeyword("");
+  //           return;
+  //         } else {
+  //           const jsonData = data.response.docs;
             
-            const stringifiedData = JSON.stringify(jsonData);
-            sessionStorage.setItem(`${keyword}`, stringifiedData )
-            setLibraryList(jsonData);
-          }
-        })
-        setInputKeyword("");
-      }
-    }
+  //           const stringifiedData = JSON.stringify(jsonData);
+  //           sessionStorage.setItem(`${keyword}`, stringifiedData )
+  //           setLibraryList(jsonData);
+  //         }
+  //       })
+  //       setInputKeyword("");
+  //     }
+  //   }
   };
 
   return(
-    <form className="form" onSubmit={handleOnSubmit}>
+    <form className="form" onSubmit={handleOnSubmit} >
       <input 
         type="text"
         ref={inputRef}
         value={inputKeyword}
-        onChange={handleOnChange}
+        onChange={()=>handleOnChange()}
       />
       <DatePicker />
       <button type="submit" >검색</button>

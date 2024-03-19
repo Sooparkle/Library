@@ -21,6 +21,8 @@ export default function BookList ({libraryList, title}) {
 const sessionDataString = sessionStorage.getItem(`${title}`);
 const sessionDatas = JSON.parse(sessionDataString);
 
+
+
   return (
     <>
       {(sessionDatas &&
