@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 
 export default function SearchForm ({ setTitle, setLibraryList }) {
   const [ inputKeyword, setInputKeyword ] = useState("");
@@ -36,10 +36,29 @@ export default function SearchForm ({ setTitle, setLibraryList }) {
     setInputKeyword(inputRef.current.value);
   };
 
-  const handleOnSubmit = (e)=>{
+  const handleOnSubmit = async (e) => {
     e.preventDefault();
     setTitle(inputRef.current.value);
-    fetchData(inputRef.current.value);
+
+    const options ={
+      method : "GET",
+      headers : {
+        "Content-Type" : "application/json",
+      }
+    }
+    try{
+      const response = await fetch("../../lbirary", options);
+
+      if(!response.ok){
+        throw new Error("Fetch failed");
+      }
+
+      const data = await response.json();
+
+    }
+    catch(error) {
+      console.error("Fetch function failed", error.message)
+    }
   };
 
 

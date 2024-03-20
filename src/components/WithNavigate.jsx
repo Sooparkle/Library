@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import React, { createContext } from "react";
 import { useNavigate } from "react-router-dom"
 
 const NavigateContext = createContext();

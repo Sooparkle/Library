@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom"
 import NaverApi from "./NaverApi";
-import { errorOut } from "firebase-tools";
 
 export default function BookList ({libraryList, title}) {
   const [ bookData, setBookDate ] = useState([]);

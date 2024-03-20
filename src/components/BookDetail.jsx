@@ -1,7 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import { useLocation, useParams } from "react-router-dom"
 import { NavigateContext } from "./WithNavigate";
-import { Chart } from "react-google-charts";
 
 
 export const BookDetail = ()=>{
