@@ -37,7 +37,8 @@ app.get("/*", (req, res) => {
 
 
 
-  app.get('/library', async (req, res)=>{
+  app.post('/library', async (req, res)=>{
+    console.log("req", req.body)
     const library =[
       {id : 1, value : 11010 , libName : "종로구" },
       {id : 2, value : 11020, libName : "중구" },
@@ -67,13 +68,13 @@ app.get("/*", (req, res) => {
     ];
     
       try{
-        const {keyword} = req.query
-        console.log("작동중 Library", keyword)
+        const word = req.body.keyword
+        console.log("작동중 Library", word)
         // console.log("작동중 req", req)
         for(let i = 0; i < library.length; i++){
-          if(keyword ==library[i].libName){
+          if(word ==library[i].libName){
             const selectedCode = library[i].value;
-    
+            console.log("Try 작동")
             const libraryApi = new URL('https://data4library.kr/api/loanItemSrchByLib?');
             libraryApi.searchParams.set("authKey", '43d7efdc5d7f99a3be907ecac62d3212026fb810e793f19e56fb0b5a390c93f8')
             libraryApi.searchParams.set("dtl_region", selectedCode);
@@ -104,7 +105,7 @@ app.get("/*", (req, res) => {
     
             const jsonData = data.response.docs;
             // const stringifiedData = JSON.stringify(jsonData);
-            // sessionStorage.setItem(`${keyword}`, stringifiedData )
+            // sessionStorage.setItem(`${word}`, stringifiedData )
     
     
             res.json(jsonData);

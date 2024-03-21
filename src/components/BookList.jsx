@@ -13,52 +13,23 @@ export default function BookList ({libraryList, title}) {
     );
   }
 
-// session에서 데이터 가져와 JSON format으로 변경하기
-const sessionDataString = sessionStorage.getItem(title);
-const sessionData = JSON.parse(sessionDataString)
-
-console.log("BookList Session ", sessionData);
-
-useEffect(()=>{
-
-if(!sessionData){
-
-  const fetchBookData = async () =>{
-    for (var i =0; i < sessionData.length; i++){
-      let bookname = sessionData[i].doc.bookname;
-      console.log("BookList Session for Loop has been start!");
-  
-      const response = await naverFetch(bookname);
-      
-      setBookDate((prevData)=>{
-        return{
-          ...prevData,
-          [bookname] : response.data
-        }
-      })
-      fetchBookData();
-    }
-  }
-}
-}, [libraryList])
-
 
 
 
   return (
     <>
-      {(sessionData &&
-      sessionData.map((book) => {
+      {(libraryList &&
+      libraryList?.map((book) => {
         const data = book.doc;
         return (
-          <div className="book-wrap" key={data.no}>
-            <img src={data.bookImageURL} />
+          <div className="book-wrap" key={data?.no}>
+            <img src={data?.bookImageURL} />
             {/* <NaverApi book={data}/>  */}
             <div className="book-brief" >
-              <div className="name">책 이름 : {data.bookname}</div>
-              <div className="author">{data.authors}</div>
-              <div className="class">{data.class_nm}</div>
-              <div className="isbn13">{data.isbn13}</div>
+              <div className="name">책 이름 : {data?.bookname}</div>
+              <div className="author">{data?.authors}</div>
+              <div className="class">{data?.class_nm}</div>
+              <div className="isbn13">{data?.isbn13}</div>
               <button type="button"  onClick={()=>{handleOnClickDetail(data)}}>상세보기</button>
             </div>
           </div>

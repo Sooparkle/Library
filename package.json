@@ -36,5 +36,9 @@
     "homlib"
   ],
   "author": "soo",
-  "license": "MIT"
+  "license": "MIT",
+  "optionalDependencies": {
+    "fsevents": "^2.0.7"
+}
+
 }
