@@ -3,7 +3,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import ko from 'date-fns/locale/ko';
 
-export const DateRangePickers = ({ onDates }) => {
+export const DateRangePickers = ({ onDates, handleReset,setIsReset }) => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
 
@@ -14,6 +14,11 @@ useEffect(()=>{
   }
 },[endDate])
 
+
+useEffect(()=>{
+  setStartDate("");
+  setEndDate("");
+},[setIsReset])
 
   return (
     <div className="search-DateRangePicker">
@@ -45,7 +50,6 @@ useEffect(()=>{
         getMonthValue={(date) => (date.toLocaleDateString('ko-KR', { month: 'short' }))}
 
       />
-
     </div>
   );
 };

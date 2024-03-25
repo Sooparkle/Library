@@ -6,7 +6,9 @@ export default function SearchForm ({ setTitle, onSearch }) {
   const [ selectValue, setSelectvalue ] = useState("");
   const [ sendStartDate, setSendStartDate ] = useState(null);
   const [ sendEndDate, setSendEndDate ] = useState(null);
+  const [ isReset, setIsReset ] = useState(false);
   const inputRef = useRef();
+  
 
 
 
@@ -29,13 +31,16 @@ export default function SearchForm ({ setTitle, onSearch }) {
     }
     try{
 
-      const response = await fetch("/library", options);
+      const response = await fetch("https://port-0-pj3-server-dc9c2nlt7zv05q.sel5.cloudtype.app/library", options);
+      // const response = await fetch("/library", options);
 
       if(!response.ok){
         throw new Error("Fetch failed", response.status);
       }
 
       const data = await response.json();
+
+      
       onSearch(data)
       console.log("Fetch data",data)
 
@@ -63,14 +68,18 @@ const handleValue=(e)=>{
   setTitle(selectedValue);
   setSelectvalue(selectedValue);
 }
-  
+
+
+const handleReset =() =>{
+  setIsReset(!true);
+}
 
 
   return(
     <form className="form" onSubmit={(e)=>handleOnSubmit(e)}>
-      <div>
+      {/* <div>
         <label htmlFor="seoulArea">지역구를 선택하세요</label>
-      </div>
+      </div> */}
       <select className="search-select"
         value={selectValue}
         onChange={(e)=>handleValue(e)}>
@@ -101,8 +110,19 @@ const handleValue=(e)=>{
           <option value="송파구">송파구</option>
           <option value="강동구">강동구</option>
       </select>
-      <DateRangePickers onDates={onDates}/>
-      <button type="submit" >검색</button>
+      <DateRangePickers 
+        onDates={onDates} 
+        handleReset={handleReset}
+        setIsReset={setIsReset}
+        />
+        
+
+      <button 
+        type="submit" 
+        >
+        검색
+        </button>
+
     </form>
   );
 }

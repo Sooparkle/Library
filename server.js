@@ -38,7 +38,6 @@ app.get("/*", (req, res) => {
 
 // 공공도서관 책 데이터 API
   app.post('/library', async (req, res)=>{
-    console.log("req", req.body)
     const library =[
       {id : 1, value : 11010 , libName : "종로구" },
       {id : 2, value : 11020, libName : "중구" },
@@ -71,14 +70,12 @@ app.get("/*", (req, res) => {
         const word = req.body.keyword
         const start = req.body.sendStartDate
         const end = req.body.sendEndDate
-        console.log("작동중 word", word)
-        console.log("작동중 start", start)
-        console.log("작동중 end", end)
-        // console.log("작동중 req", req)
+
         for(let i = 0; i < library.length; i++){
           if(word ==library[i].libName){
             const selectedCode = library[i].value;
             console.log("Try 작동")
+            
             const libraryApi = new URL('https://data4library.kr/api/loanItemSrchByLib?');
             libraryApi.searchParams.set("authKey", '43d7efdc5d7f99a3be907ecac62d3212026fb810e793f19e56fb0b5a390c93f8')
             libraryApi.searchParams.set("dtl_region", selectedCode);
@@ -95,7 +92,6 @@ app.get("/*", (req, res) => {
             };
     
             const response = await fetch(libraryApi.toString(), options);
-            console.log("response", response)
     
             if(!response.ok){
               // throw new Error(`Library Fetch failed at SearchForm ${response.status}`);
@@ -109,7 +105,6 @@ app.get("/*", (req, res) => {
               res.json("데이터가 없습니다.")
             }
             const jsonData = data.response.docs;
-            console.log("completed ", jsonData);
     
             res.json(jsonData);
           }
@@ -125,6 +120,44 @@ app.get("/*", (req, res) => {
     
     })
 
+
+
+app.post('/detail', async(req, res)=>{
+  console.log("detail date working")
+  console.log("req. body",req.body.isbn13)
+
+  try{
+    const isbn = req.body.isbn13
+    const detailLibrary = new URL('http://data4library.kr/api/usageAnalysisList?');
+    detailLibrary.searchParams.set("authKey", '43d7efdc5d7f99a3be907ecac62d3212026fb810e793f19e56fb0b5a390c93f8');
+    detailLibrary.searchParams.set("isbn13", isbn)
+    detailLibrary.searchParams.set("format", 'json');
+
+
+    const options= {
+      method : "GET",
+      headers : {
+        "Content-Type" : "application/json",
+      }
+    };
+
+    const response = await fetch(detailLibrary.toString(), options);
+    
+    if(!response.ok){
+      throw new Error("fetch failed", response.status);
+    }
+    
+    const data = await response.json();
+    console.log("date", data)
+    const jsonData = data.response;
+    res.json(jsonData);
+    console.log("data fetch completed", jsonData);
+  }
+  catch(error){
+    console.error(`Detail Featch failed ${error.message}`);
+    res.json({message : '데이터 정보를 가져오는데 실패 하였습니다.'})
+  }
+})
 
 
 

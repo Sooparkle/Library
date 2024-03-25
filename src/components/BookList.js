@@ -6,9 +6,7 @@ export default function BookList ({libraryList}) {
   const navigate = useNavigate();
 
   const handleOnClickDetail = (data)=>{
-    navigate (
-    `/${data.isbn13}`, 
-    {state : data}
+    navigate (`/${data.isbn13}`, {state : data}
     );
   }
 
@@ -28,7 +26,7 @@ export default function BookList ({libraryList}) {
               <div className="author">{data?.authors}</div>
               <div className="class">{data?.class_nm}</div>
               <div className="isbn13">{data?.isbn13}</div>
-              <button type="button"  onClick={()=>{handleOnClickDetail(data)}}>상세보기</button>
+              <button type="button" onClick={()=>handleOnClickDetail(data)}>상세보기</button>
             </div>
           </div>
         );
