@@ -41,10 +41,22 @@ function App() {
         }
       </div>
       <div
-        className="ppt"
-        onClick={()=>{window.open('https://docs.google.com/presentation/d/1EDLgsa5C0gUm0vAPXyOkXXidjDJ1kSwUmXckX7GExx0/edit?usp=sharing', '_blank')}}
-      > PPT확인
-      </div>
+          className="git-client"
+          onClick={()=>{window.open('https://github.com/Sooparkle/Library/tree/renewerlibrary', '_blank')}}
+        > GIT<br />Client
+        </div>
+
+        <div
+          className="git-server"
+          onClick={()=>{window.open('https://github.com/Sooparkle/pj3_server/tree/main', '_blank')}}
+        > GIT<br />Server
+        </div>
+
+        <div
+          className="ppt"
+          onClick={()=>{window.open('https://docs.google.com/presentation/d/14TOEi4yO2Lkx2jMfaDJk-Sftx9EpYioa4syJSQ9FAik/edit?usp=sharing', '_blank')}}
+        > PPT확인
+        </div>
         </>
   );
 }

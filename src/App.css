@@ -90,14 +90,13 @@ font-weight: bold;
 
 
 
-.ppt{
+.ppt, .git-server, .git-client{
   position: fixed;
-  bottom : 10%;
   right : 7%;
   width: 50px;
   height: 50px;
   font-size: 10px;
-  background: #1f98e8;
+
   border-radius: 50%;
   cursor: pointer;
 
@@ -106,6 +105,24 @@ font-weight: bold;
   align-content: center;
   justify-content: center;
   align-items: center;
+}
+
+.git-client{
+  bottom : 34%;
+  color:#fff;
+  background: var(--color-strong);
+}
+
+.git-server{
+  bottom : 22%;
+  background:var(--color-main)
+}
+
+
+.ppt{
+  bottom : 10%;
+  background: var(--color-light);
+  color : #555555
 }
 
 
