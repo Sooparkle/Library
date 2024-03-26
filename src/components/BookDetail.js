@@ -9,14 +9,13 @@ export const BookDetail = ()=>{
   const [ loanInfo, setLoanInfo ] =useState([])
 
   const handleGoBack = () => {
-    navigate(-1);
+    navigate(-1, {state : state});
   };
 
 
   const bookDesc = bookinfo.book?.description.replace("&lt;", '(').replace("&gt;", ")")
 
 
-  console.log("bookDesc", bookDesc)
 
   useEffect(()  =>{
     const fetchDetail = async () =>{
@@ -41,7 +40,6 @@ export const BookDetail = ()=>{
 
       const data = await response.json();
 
-      console.log("detail data is done", data);
       setBookInfo(data)
     }
     catch(error){
@@ -79,10 +77,10 @@ export const BookDetail = ()=>{
 
         <div className="detail-keyword-wrap">
           {
-            bookinfo && bookinfo.keywords?.slice(0, 10).map((item) => (
+            bookinfo && bookinfo.keywords?.slice(0, 10).map((item, index) => (
               <span 
                 className='detail-keyword' 
-                key={item.keyword.id}>{item.keyword.word}</span>
+                key={index}>{item.keyword.word}</span>
             ))
           }
           </div>

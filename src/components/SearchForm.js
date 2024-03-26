@@ -42,7 +42,6 @@ export default function SearchForm ({ setTitle, onSearch }) {
 
       
       onSearch(data)
-      console.log("Fetch data",data)
 
     }
     catch(error) {

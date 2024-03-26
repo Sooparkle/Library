@@ -8,7 +8,6 @@ function App() {
   const [libraryList, setLibraryList] = useState(null);
 
   const onSearch = (newLibraryList) => {
-    console.log("Data onSearch", newLibraryList);
     setLibraryList(newLibraryList);
   };
 
