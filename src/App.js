@@ -1,22 +1,49 @@
 import "./App.css";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SearchForm from "./components/SearchForm";
 import BookList from "./components/BookList";
+import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function App() {
   const [title, setTitle] = useState("");
   const [libraryList, setLibraryList] = useState(null);
+  const [ scrollPosition, setScrollPosition ] = useState();
 
+  const location =useLocation()
+  const fetchBookList = useSelector(state => state.searchList)
+  
+  
   const onSearch = (newLibraryList) => {
     setLibraryList(newLibraryList);
   };
 
+  useEffect(()=>{
+      setLibraryList(fetchBookList?.dataList)
+  },[location.pathname])
+
+
+  useEffect(()=>{
+    const handelScroll = () =>{
+      console.log("handelScroll 작동")
+      setScrollPosition(window.scrollY);
+  }
+  window.addEventListener("scroll",handelScroll)
+
+  return() => window.removeEventListener("scroll", handelScroll);
+
+},[])
+
+useEffect(() => {
+  console.log("scrollPosition", scrollPosition)
+  window.scrollTo(0, scrollPosition);
+}, [location.pathname]);
 
   return (
     <>
       <div className="search-background">
         <div className="search-wrap">
-          <h1>우리동네 도서관 베스트 도서 <span>검색</span></h1>
+          <h1>우리동네 도서관 베스트 <br />도서 <span>검색</span></h1>
           {title ? (
           <p className="search-title">{title}</p>
           ) : (
@@ -35,27 +62,10 @@ function App() {
         }
         {
           libraryList ? (
-          libraryList && <BookList libraryList={libraryList} />)
+          libraryList && <BookList  libraryList={libraryList}/>)
           : <p>아직 공공데이터로부터 들어온 데이터가 없습니다.</p>
         }
       </div>
-      <div
-          className="git-client"
-          onClick={()=>{window.open('https://github.com/Sooparkle/Library/tree/renewerlibrary', '_blank')}}
-        > GIT<br />Client
-        </div>
-
-        <div
-          className="git-server"
-          onClick={()=>{window.open('https://github.com/Sooparkle/pj3_server/tree/main', '_blank')}}
-        > GIT<br />Server
-        </div>
-
-        <div
-          className="ppt"
-          onClick={()=>{window.open('https://docs.google.com/presentation/d/14TOEi4yO2Lkx2jMfaDJk-Sftx9EpYioa4syJSQ9FAik/edit?usp=sharing', '_blank')}}
-        > PPT확인
-        </div>
         </>
   );
 }

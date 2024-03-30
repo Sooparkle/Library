@@ -1,5 +1,8 @@
 import React, { useRef, useState, useEffect } from "react";
 import { DateRangePickers } from"./DateRangePickers";
+import { useDispatch } from "react-redux";
+import { resultList } from "../store/searchSlice";
+import useFetchBookList from "./UseFetchBooklist";
 
 
 export default function SearchForm ({ setTitle, onSearch }) {
@@ -7,8 +10,9 @@ export default function SearchForm ({ setTitle, onSearch }) {
   const [ sendStartDate, setSendStartDate ] = useState(null);
   const [ sendEndDate, setSendEndDate ] = useState(null);
   const [ isReset, setIsReset ] = useState(false);
+  const dispatch = useDispatch();
   const inputRef = useRef();
-  
+
 
 
 
@@ -39,17 +43,18 @@ export default function SearchForm ({ setTitle, onSearch }) {
       }
 
       const data = await response.json();
-
       
+      console.log("SerachFrom 데이터 완료", data)
+      dispatch(resultList(data));
+
+      //passing to Parents component 
       onSearch(data)
 
     }
     catch(error) {
       console.error("Fetch function failed", error.message);
     }
-    finally{
-      setSelectvalue("");
-    }
+
   };
 
 
@@ -73,6 +78,7 @@ const handleReset =() =>{
   setIsReset(!true);
 }
 
+// useFetchBookList(selectValue, sendEndDate, sendStartDate);
 
   return(
     <form className="form" onSubmit={(e)=>handleOnSubmit(e)}>

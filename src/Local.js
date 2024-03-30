@@ -8,7 +8,7 @@ export default function Local () {
   const [ selectedPlace, setSelectedPlace ] = useState('광화문');
 
 
-  const localLlibraryList = local.localList
+  const localLlibraryList = local?.localList
 
   const {kakao} = window;
 

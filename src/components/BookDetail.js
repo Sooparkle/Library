@@ -5,13 +5,15 @@ import { useLocation, useNavigate, useParams } from "react-router-dom"
 export const BookDetail = ()=>{
   const [ bookinfo, setBookInfo ] = useState([]);
   const { state } = useLocation();
+  const location = useLocation();
   const navigate = useNavigate();
   const [ loanInfo, setLoanInfo ] =useState([])
 
-  const handleGoBack = () => {
-    navigate(-1, {state : state});
-  };
 
+  const handleGoBack = () => {
+    const from = location?.state.from;
+    navigate(from, { replace : true, state:{message : "목록"} });
+  };
 
   const bookDesc = bookinfo.book?.description.replace("&lt;", '(').replace("&gt;", ")")
 
@@ -27,7 +29,7 @@ export const BookDetail = ()=>{
             "Content-Type" : "application/json"
           },
           body : JSON.stringify({
-            isbn13 : state?.isbn13
+            isbn13 : state?.state.isbn13
         })
       };
 
@@ -57,12 +59,12 @@ export const BookDetail = ()=>{
     <>
     <div className="detail-wrap">
       <div className="detail-book">
-        <img src={state?.bookImageURL} alt={state?.bookname}></img>
+        <img src={state?.state.bookImageURL} alt={state?.state.bookname}></img>
         <div className="detail-info">
-          <div  className="detail-name">{state?.ranking}. {state?.bookname}</div>
-          <div className="">{state?.authors}</div>
-          <div className="">분류 : {state?.class_nm}</div>
-          <div className="">ISBN : {state?.isbn13}</div>
+          <div  className="detail-name">{state?.state.ranking}. {state?.state.bookname}</div>
+          <div className="">{state?.state.authors}</div>
+          <div className="">분류 : {state?.state.class_nm}</div>
+          <div className="">ISBN : {state?.state.isbn13}</div>
         </div>
       </div>
 

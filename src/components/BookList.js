@@ -1,25 +1,45 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom"
 
 export default function BookList ({libraryList}) {
   const [ bookData, setBookDate ] = useState([]);
   const navigate = useNavigate();
   const { state } = useLocation();
+  const location =  useLocation();
+  const dataOn = useSelector(state => state)
 
-  console.log("BookList STATE", state)
+  
+  useEffect(()=>{
+    console.log("location", location)
+  },[location.state])
+
+  useEffect(()=>{
+    setBookDate(dataOn?.searchList.dataList)
+  },[dataOn])
 
   const handleOnClickDetail = (data)=>{
-    navigate (`/${data.isbn13}`, {state : data}
+    navigate (
+      `/${data.isbn13}`, 
+      { state :{
+          state : data,
+          from : location.pathname,
+        }
+      }
     );
   }
 
 
-  const renderBookList = (list) => {
-    return list.map((book) => {
-      const data = book.doc;
-      return (
-        <div className="book-wrap" key={data?.no}>
-          <img src={data?.bookImageURL} alt={data?.bookname} />
+
+
+  return (
+    <div>
+      {
+        bookData?.map((book)=>{
+          const data = book.doc;
+          return(
+          <div className="book-wrap" key={data?.no}>
+            <img src={data?.bookImageURL} alt={data?.bookname} />
           <div className="book-brief">
             <div className="name">책 이름: {data?.bookname}</div>
             <div className="author">저자: {data?.authors}</div>
@@ -30,17 +50,14 @@ export default function BookList ({libraryList}) {
             </button>
           </div>
         </div>
-      );
-    });
-  };
+        )
+      })
+      }
 
-  return (
-    <div>
-      {libraryList && renderBookList(libraryList)}
-      {!libraryList && state && renderBookList(state)}
+{/* 
       {!libraryList && !state && (
         <div>검색된 결과가 없습니다. 서울시 '-구' 검색해 보세요.</div>
-      )}
+      )} */}
     </div>
   );
 }

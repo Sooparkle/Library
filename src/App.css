@@ -3,9 +3,16 @@
   --strong-color : #095a9b;
   --light-color : #82c7f7;
 
-  font-family: sans-serif, Inter, system-ui, Avenir, Helvetica, Arial, ;
+  font-family: "Noto Sans KR",sans-serif, Inter, system-ui, Avenir, Helvetica, Arial, ;
   line-height: 1.5;
-  font-weight: 400;
+
+
+--font-title : 58px;
+--font-exttrem-2x : 34px;
+--font-exttrem : 28px;
+--font-large :20px;
+--font-main : 16px;
+--font-small : 16px;
 
   background: #ffffff;
 
@@ -14,9 +21,13 @@
 
 }
 
-html, body{
+html, body, ul, li, input{
   margin: 0;
   padding:0
+}
+
+input, select {
+  border-radius: 6px;;
 }
 
 ul, li {
@@ -41,6 +52,19 @@ a{
   background: #fff;
 }
 
+.header-mobile{
+  position: fixed;
+  top: 0;
+  right: 0;
+  left:0 ;
+  bottom:0;
+  transition: transform .3s ease-in-out;
+  transform: translateX(0%);
+  background: #fff;
+  z-index: 100;
+  box-shadow: 0px 6px 6px rgba(0, 0, 0, 0.127);
+}
+
 
 .header{
   width:auto;
@@ -55,18 +79,37 @@ a{
   width: 50px;
 }
 
+.nav-menu{
+  height: 100%;
+}
+
+.nav-menu{
+  height: 63px;
+}
+
 .header ul{
 display: flex;
 justify-content: flex-end;
+align-items: center;
 gap:3rem;
-margin-right: 150px;
+height: 100%;
 font-size: 18px;
 font-weight: bold;
 }
 
 
+
+.header ul li{
+  height:63px;
+
+
+  }
+
 .header ul li a{
-  display: block;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 0 1rem;
 }
 
 .header ul li:hover{
@@ -76,6 +119,40 @@ font-weight: bold;
 .header ul li a:hover{
   color : var(--main-color)
 }
+
+.hamburger-icon {
+  display: none; /* Added: Initially hide the hamburger icon */
+  flex-direction: column;
+  justify-content: space-around;
+  width: 30px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.hamburger-line {
+  width: 100%;
+  height: 3px;
+  background-color: #333;
+  transition: all 0.3s ease-in-out;
+}
+
+.hamburger-line.open:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.hamburger-line.open:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger-line.open:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+
+
+
+
+
 
 .main {
   margin: 0 auto;
@@ -90,55 +167,21 @@ font-weight: bold;
 
 
 
-.ppt, .git-server, .git-client{
-  position: fixed;
-  right : 7%;
-  width: 50px;
-  height: 50px;
-  font-size: 10px;
-
-  border-radius: 50%;
-  cursor: pointer;
-
-  box-shadow: 0 0 10px 4px rgba(0, 0, 0, 0.2);
-  display: flex;
-  align-content: center;
-  justify-content: center;
-  align-items: center;
-}
-
-.git-client{
-  bottom : 34%;
-  color:#fff;
-  background: var(--strong-color);
-}
-
-.git-server{
-  bottom : 22%;
-  background:var(--main-color)
-}
-
-
-.ppt{
-  bottom : 10%;
-  background: var(--light-color);
-  color : #555555
-}
-
-
-
 .search-background{
-  width: 100%;
-  height: 40dvh;
-  min-height:500px;
+  width: auto;
+  height: 70vh;
+  min-height:700px;
   background: var(--light-color);
   margin-bottom: 120px;
   margin-top: 63px;
 }
 
 .search-wrap{
-  width: 460px;
+  min-width: 200px;
+  max-width: 460px;
   margin-inline: auto;
+  padding: 0 1rem;
+  box-sizing: border-box;
 }
 .search-wrap h1{
   padding-top: 100px;
@@ -194,6 +237,8 @@ h1{
   font-size: 20px;;
   margin-bottom: 10px;
   margin-top: 10px;
+  padding-left: 10px;
+  box-sizing: border-box;
 }
 
 .form input{
@@ -205,7 +250,7 @@ margin-bottom: 10px;
 }
 
 .search-DateRangePicker{
-  display: grid;
+  /* display: grid; */
   grid-auto-flow: column;
   gap:34px;
 }
@@ -222,9 +267,17 @@ form button[type=sumbit]:hover {
   grid-template-columns: 2fr 1fr;
 } */
 
-.react-datepicker-wrapper{
-  width:100%;
+.search-DateRangePicker .react-datepicker-wrapper{
+  display: block;
+  width: auto;
 }
+
+.react-datepicker-wrapper input{
+  width: 100%;
+  padding-left: 10px;
+  box-sizing: border-box;
+}
+
 
 .react-datepicker__tab-loop{
   position: absolute;
@@ -249,8 +302,10 @@ button:focus-visible {
 .content{
   display: grid;
   grid-template-columns: 1fr;
-  margin-inline: 6rem;
-  padding : 0
+  margin-inline: auto;
+  padding : 0;
+  max-width :900px;
+  min-width: 280px;
 }
 
 
@@ -268,8 +323,10 @@ button:focus-visible {
   background: #f9f9f9;
 }
 
-.book-wrap  img{
-  margin-right: 10px;
+.book-wrap img{
+  display: block;
+  max-width: 100%;
+  min-width: 50px;
   border-radius: 8px;
   box-shadow: 0px 6px 16px #4a4a4a;
 }
@@ -282,19 +339,17 @@ button:focus-visible {
 
 .book-brief{
   text-align: left;
-  /* margin-left : 3rem; */
-  position: relative;
+  margin-left : 10px;
 }
 
 .book-brief .name{
-  font-size:1.5rem;
+  font-size:var(--font-large);
+  font-weight: 600;
+  margin-bottom: 20px;
 }
 
 .book-brief button{
-  position: absolute;
-  right:18%;
-  bottom : 10%;
-  padding : 1rem 3rem;
+  margin-top: 20px;
 }
 
 .book-brief button:hover{
@@ -350,9 +405,8 @@ font-weight: bold;
 }
 
 .detail-keyword-wrap{
-  display: grid;
-  grid-auto-flow: column;
-  grid-template-columns: max-content;
+  display: flex;
+  flex-wrap: wrap;
   gap: .8rem;
   text-align: center;
   margin-top: 20px;
