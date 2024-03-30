@@ -4,6 +4,8 @@ import SearchForm from "./components/SearchForm";
 import BookList from "./components/BookList";
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { ReactComponent as DownAllow } from "./assets/DonwAllow.svg"
+
 
 function App() {
   const [title, setTitle] = useState("");
@@ -25,7 +27,6 @@ function App() {
 
   useEffect(()=>{
     const handelScroll = () =>{
-      console.log("handelScroll 작동")
       setScrollPosition(window.scrollY);
   }
   window.addEventListener("scroll",handelScroll)
@@ -35,7 +36,6 @@ function App() {
 },[])
 
 useEffect(() => {
-  console.log("scrollPosition", scrollPosition)
   window.scrollTo(0, scrollPosition);
 }, [location.pathname]);
 
@@ -51,6 +51,9 @@ useEffect(() => {
         )}
           <SearchForm setTitle={setTitle} onSearch={onSearch} />
           <p>공공데이터에서 정보를 받아오는 데 <span>5초~10초</span> 시간이 걸립니다.<br />10초가 넘었음에도 정보가 출력되지 않으면 다시 시도해보시기 바랍니다.</p>
+        </div>
+        <div className="search-down-allow">
+          {libraryList &&  <DownAllow />}
         </div>
       </div>
 

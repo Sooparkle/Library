@@ -11,7 +11,6 @@ export default function BookList ({libraryList}) {
 
   
   useEffect(()=>{
-    console.log("location", location)
   },[location.state])
 
   useEffect(()=>{

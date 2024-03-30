@@ -4,7 +4,8 @@ import React, {useState, useEffect} from "react";
 
 export const Header =  () => {
   const navigate = useNavigate();
-
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMobileView, setIsMobileView ] = useState(false);
 
   // useEffect(()=>{
   //   const handleWidth = () => {
@@ -27,11 +28,11 @@ export const Header =  () => {
     window.alert("유지보수 중입니다.")
   }
 
-  // const toggleMenu = () => {
-  //   setIsMenuOpen(!isMenuOpen);
-  //   setIsMobileView(!isMobileView);
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+    setIsMobileView(!isMobileView);
 
-  // };
+  };
 
 
 
@@ -56,7 +57,7 @@ export const Header =  () => {
               <li>
                 <NavLink 
                 preventScrollReset
-                to="/" >검색</NavLink>
+                to="/" onClick={toggleMenu}>검색</NavLink>
               </li>
               <li>
                 <NavLink 

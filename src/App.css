@@ -170,12 +170,27 @@ font-weight: bold;
 .search-background{
   width: auto;
   height: 70vh;
-  min-height:700px;
+  min-height:660px;
   background: var(--light-color);
-  margin-bottom: 120px;
+  margin-bottom: 50px;
   margin-top: 63px;
 }
 
+.search-down-allow{
+  width: 50px;
+  margin-inline:auto ;
+  animation: tagMotion .8s ease-in-out infinite alternate;
+
+}
+
+@keyframes tagMotion {
+  0% {
+    transform: translateY(0); /* Initial position */
+  }
+  100% {
+    transform: translateY(10px); /* Final position */
+  }
+}
 .search-wrap{
   min-width: 200px;
   max-width: 460px;

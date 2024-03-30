@@ -44,7 +44,6 @@ export default function SearchForm ({ setTitle, onSearch }) {
 
       const data = await response.json();
       
-      console.log("SerachFrom 데이터 완료", data)
       dispatch(resultList(data));
 
       //passing to Parents component 
