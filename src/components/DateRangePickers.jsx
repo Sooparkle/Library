@@ -20,6 +20,15 @@ useEffect(()=>{
   setEndDate("");
 },[setIsReset])
 
+
+useEffect(() => {
+  const today = new Date();
+  const oneWeekAgo = new Date();
+  oneWeekAgo.setDate(today.getDate() - 15);
+
+  setStartDate(today);
+  setEndDate(oneWeekAgo);
+}, []);
   return (
     <div className="search-DateRangePicker">
 

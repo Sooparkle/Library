@@ -12,7 +12,6 @@ const searchSlice = createSlice({
   reducers:{
     resultList : (state, action) => {
       state.dataList = action.payload;
-
     }
   }
 })

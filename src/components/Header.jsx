@@ -1,27 +1,12 @@
-import { Link, NavLink, Outlet, ScrollRestoration, useNavigate } from "react-router-dom";
+import { NavLink, Outlet, ScrollRestoration, useNavigate } from "react-router-dom";
 import logo from '../assets/Logo.svg';
-import React, {useState, useEffect} from "react";
+import React, {useState, } from "react";
 
 export const Header =  () => {
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMobileView, setIsMobileView ] = useState(false);
 
-  // useEffect(()=>{
-  //   const handleWidth = () => {
-  //     if(window.innerWidth < 768){
-  //       setIsMobileView(true);
-  //     } else {
-  //       setIsMobileView(false);
-  //       setIsMenuOpen(false)
-  //     }
-  //   }
-
-  //   window.addEventListener("resize", handleWidth);
-
-  //   return() => window.removeEventListener("resize", handleWidth);
-
-  // },[])
 
   const handleMaintenace = () =>{
     navigate('/')
@@ -38,7 +23,7 @@ export const Header =  () => {
 
   return(
     <>
-      <div className={`header-wrap`}>
+      <header className={`header-wrap`}>
         <div className={`header`}>
           <div className={`header-left `}>
             <div className="logo"
@@ -59,25 +44,21 @@ export const Header =  () => {
                 preventScrollReset
                 to="/" onClick={toggleMenu}>검색</NavLink>
               </li>
-              <li>
+              {/* <li>
                 <NavLink 
                 preventScrollReset
                 onClick={handleMaintenace} to="/local">지역모임</NavLink>
-              </li>
+              </li> */}
             </ul>
           </nav>
-          {/* <div className="hamburger-icon" onClick={toggleMenu}>
-            <div className={`hamburger-line ${isMenuOpen ? 'open' : ''}`} />
-            <div className={`hamburger-line ${isMenuOpen ? 'open' : ''}`} />
-            <div className={`hamburger-line ${isMenuOpen ? 'open' : ''}`} />
-          </div> */}
         </div>
-      </div>
+      </header>
 
-      <Outlet />
       <ScrollRestoration getKey={(location) =>{
       return location.key}} 
       />
+      <Outlet />
+      <ScrollRestoration />
 
     </>
   );
