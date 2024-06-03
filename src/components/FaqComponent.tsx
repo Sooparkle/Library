@@ -2,27 +2,44 @@ import React, { useState } from "react"
 import FAQ from "../data/faq"
 import { Link } from "react-router-dom"
 
-const FaqDetail =({ item, current, handleToggleId }) =>{
 
+interface FAQItem {
+  id : number;
+  title : string;
+  description : string;
+}
+
+interface FaqDetailProps {
+  item :{
+    id: number;
+    title: string;
+    description: string;
+  };
+  current : boolean;
+  handleToggleId : (id :number) => void
+}
+
+const FaqDetail : React.FC<FaqDetailProps> =({ item, current, handleToggleId } : FaqDetailProps) =>{
   return(
     <li key={item.id}
       className="faq-each"
       onClick={()=>handleToggleId(item.id)}
     >
       <div className={`faq-title ${current ? "activated" : ""}`} ><strong>{item.title}</strong></div>
-        <div className={`faq-description ${current  ? "activated" : "" }`} >
+        <div className={`faq-description ${current  ? "activ ated" : "" }`} >
           {item.description}
           </div>
     </li>
   )
 }
 
-export const FaqComponent = () =>{
-const [ currentId, setCurrentId ] =useState(FAQ[0].id);
+export const FaqComponent :React.FC = () =>{
+const [ currentId, setCurrentId ] =useState<number | null >(FAQ[0].id);
 
-const handleToggleId = (id) =>{ 
-  setCurrentId(prev => prev === id ? null : id)
-}
+const handleToggleId = (id: number) => {
+  setCurrentId(prev => (prev === id ? null : id));
+};
+
   return(
     <main>
       <h2
@@ -32,7 +49,7 @@ const handleToggleId = (id) =>{
       <section className="FAQ-wrap">
         <ul>
           {
-            FAQ.map(item => {
+            FAQ.map((item : FAQItem) => {
               return <FaqDetail 
               key={item.id}
               item={item} current={currentId === item.id} handleToggleId={handleToggleId}/>
@@ -46,7 +63,6 @@ const handleToggleId = (id) =>{
           padding:"1rem 1.8rem",
           color:"#fff",
           borderRadius : ".2rem",
-          display :"block",
           width:"80px",
           marginInline:"auto",
           marginTop:"20px",

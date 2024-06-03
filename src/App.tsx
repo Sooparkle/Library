@@ -6,8 +6,37 @@ import { ReactComponent as DownAllow } from "./assets/DonwAllow.svg";
 import { useIsFetching, useQuery } from "@tanstack/react-query";
 import { ReactComponent as Loading } from "./assets/loading.svg";
 
+interface ApiProps {
+  response : {
+    doc : items[]
+  }
+}
+
+interface items {
+  doc: {
+    addition_symbol: string;
+    authors: string;
+    bookDtlUrl: string;
+    bookImageURL: string;
+    bookname: string;
+    class_nm: string;
+    class_no: string;
+    isbn13: string;
+    loan_count: string;
+    no: number;
+    publication_year: string;
+    publisher: string;
+    ranking: string;
+    vol: string;
+  }
+}
 
 
+interface searchParams {
+  code : number;
+  start : string | null;
+  end : string | null;
+}
 
 function App() {
   const [title, setTitle] = useState("");
@@ -21,7 +50,9 @@ const isFetching = useIsFetching()
 
 
 
-  const fetcingData = async (code, start, end) =>{
+
+
+  const fetcingData = async (code:number |null, start:string | null, end:string | null):Promise<items[]> =>{
     try{
       const resposne = await 
       fetch(`http://data4library.kr/api/loanItemSrch?authKey=${process.env.REACT_APP_LIBRARY}&dtl_region=${code}&startDt=${end}&endDt=${start}&pageSize=100&format=json`)
@@ -47,8 +78,7 @@ const isFetching = useIsFetching()
 
 
   // set the datas from SearchForm componenet
-  const onSearch = (code, start, end ) =>{
-    console.log("function onSearch")
+  const onSearch = (code:number, start:string | null, end : string |null ) =>{
     setQueryBoolean(true)
     
     setCode(code);
@@ -79,7 +109,6 @@ const isFetching = useIsFetching()
           <SearchForm 
             setTitle={setTitle}
             onSearch={onSearch}
-            isPending={isPending}
 
           />
           <p><span>API 제공 기관의 데이터 전송 자체가 느립니다.</span> 이점 양해 부탁드립니다.</p>

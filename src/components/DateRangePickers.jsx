@@ -3,9 +3,19 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import ko from 'date-fns/locale/ko';
 
-export const DateRangePickers = ({ onDates, handleReset,setIsReset }) => {
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
+
+export interface DateRangePickersProps {
+  onDates : (data: DateRangePickersData ) => void;
+}
+
+export interface DateRangePickersData {
+  startDate: Date | null;
+  endDate: Date | null;
+}
+
+export const DateRangePickers : React.FC<DateRangePickersProps> = ({ onDates }) => {
+  const [startDate, setStartDate] = useState<Date |null>(null);
+  const [endDate, setEndDate] = useState<Date | null>(null);
 
 
 useEffect(()=>{

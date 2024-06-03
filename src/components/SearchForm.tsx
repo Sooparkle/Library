@@ -1,27 +1,38 @@
 import React, { useState } from "react";
-import { DateRangePickers } from "./DateRangePickers";
+import DateRangePickers, {DateRangePickersPickers} from "./DateRangePickers";
 
 
-export default function SearchForm({ setTitle, onSearch, isPending}) {
-  const [selectValue, setSelectvalue] = useState('종로구');
-  const [selectCode, setSelectCode ] = useState("11010")
-  const [sendStartDate, setSendStartDate] = useState(null);
-  const [sendEndDate, setSendEndDate] = useState(null);
-  const [ loadingSet, setLoadingSet ] = useState(false);
-  const [ isSubmited, setIsSubmited ] = useState(false);
+interface SearchFormProps {
+  setTitle : (title : string) => void;
+  onSearch : (code : string, startDate : string | null, endDate : string |null) => void;
+}
+
+interface DataRangepickerProps {
+  onDates : (data :DateRangePickers.DataRangeData) => void
+}
+
+interface DateRangePickersData {
+  startDate : string | null;
+  endDate : string | null;
+}
+
+export default function SearchForm(props : SearchFormProps) {
+  const [selectValue, setSelectvalue] = useState<string>('종로구');
+  const [selectCode, setSelectCode ] = useState<string>("11010")
+  const [sendStartDate, setSendStartDate] = useState<string | null>(null);
+  const [sendEndDate, setSendEndDate] = useState<string | null>(null);
   
 
   // useGetQuery(selectValue, sendStartDate, sendEndDate)
-  const handleOnSubmit = (e) => {
+  const handleOnSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
 
-      console.log("searchForm submit")
     onSearch(selectCode, sendStartDate, sendEndDate)
     setTitle(selectValue)
   }
 
 
-  const onDates = ({ endDate, startDate, }) => {
+  const onDates = ({ endDate :string | null, startDate : string | null }: DateRangeData) => {
     const formattedStartDate = startDate?.toISOString().slice(0, 10); // YYYY-MM-DD
     const formattedEndDate = endDate?.toISOString().slice(0, 10);
 
@@ -29,7 +40,7 @@ export default function SearchForm({ setTitle, onSearch, isPending}) {
     setSendEndDate(formattedEndDate);
   };
 
-  const handleValue = (e) => {
+  const handleValue = (e : React.ChangeEvent<HTMLSelectElement>) => {
     const selectOption = e.target.options[e.target.selectedIndex]
     const selectedCode = selectOption.dataset.value;
     const selectedValue = selectOption.value;
@@ -46,9 +57,7 @@ export default function SearchForm({ setTitle, onSearch, isPending}) {
       <form 
         className="form" 
         onSubmit={handleOnSubmit}>
-        {/* <div>
-        <label htmlFor="seoulArea">지역구를 선택하세요</label>
-      </div> */}
+
         <select
           aria-label="서울시 구립도서관 코드 선택 버튼"
           className="search-select"
