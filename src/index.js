@@ -3,44 +3,43 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
 import Header from './components/Header';
 import { BookDetail } from './components/BookDetail';
-import Local from "./Local";
-import { Provider } from 'react-redux'
-import { store } from './store/store';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { FaqComponent } from './components/FaqComponent';
+import { ErrorPage } from './components/ErrorPage';
+
 
 const router = createBrowserRouter([
   {
     path:"/",
     element : <Header />,
+    errorElement: <ErrorPage />,
     children:[
       {
         path:'/',
         element:<App />
       },
       {
-        path:"/:isbn13",
+        path:"book/:isbn13",
         element:<BookDetail />
       },
       {
-        path:"local",
-        element:<Local />
-      }
+        path:"/faq",
+        element:<FaqComponent />
+      },
     ]
   },
-
 ]);
 
 const queryClient = new QueryClient()
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <Provider store={store}>
       <QueryClientProvider client={queryClient} >
         <RouterProvider router={router} />
       </QueryClientProvider >
-    </Provider>
   </React.StrictMode>
 );
 

@@ -11,7 +11,6 @@ export const BookDetail = ()=>{
   const navigate = useNavigate();
 
 
-  console.log("BookDetail state", state)
   const  isbn = state?.state.doc.isbn13;
   const bookDesc = bookDetail?.response.book.description.replace("&lt;", '(').replace("&gt;", ")")
 

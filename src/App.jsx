@@ -68,10 +68,14 @@ const isFetching = useIsFetching()
 
   return (
     <>
-      <div className="search-background">
+      <section className="search-background">
 
-        <div className="search-wrap">
-          <h1>오늘은 어떤 책을 읽어 볼까요?</h1>
+        <div 
+        className="search-wrap"
+        style={{height : libraryQuery ? "40dvh" : "100dvh"}}
+        
+        >
+          <h1>어떤 도서관의 대출 베스트를 볼까요?</h1>
           <SearchForm 
             setTitle={setTitle}
             onSearch={onSearch}
@@ -83,17 +87,17 @@ const isFetching = useIsFetching()
         <div className="search-down-allow">
           {libraryQuery &&  <DownAllow />}
         </div>
-      </div>
+      </section>
 
 
     {/* contents area */}
-      <div className="content">
+      <main className="content">
       {title  &&<p className="search-title">{title}</p> }
         {
           isFetching ?  (
             <div className="search-loader-wrap">
               <p><strong>"{title}" 데이터</strong></p>
-                기관에서 제공하는 데이터 통신 속도가 느립니다.
+                기관에서 제공하는 API 속도가 느립니다.
               <span>(평균 통신 시간 : 7초 ~13초 이상)</span>
               <Loading className="loader" />
             </div>
@@ -104,27 +108,9 @@ const isFetching = useIsFetching()
         })
         }
           
-          {/* 선택 항목 데이터 명칭 */}
-        {/* {
-          libraryList && (
-          <p className="search-title"> 선택한 지역구 : {title}</p>
-          ) 
-        } */}
 
-        {/* 선택한 항목에 대한 결과값 영역 */}
-        {
-        //  (
-        //     
-        //     ) 
-        }
-
-        {/* {
-          filter && libraryQuery?.map((item,index) => {
-            return <BookList key={index} item={item} />
-          })
-        } */}
-      </div>
-        </>
+      </main>
+    </>
   );
 }
 

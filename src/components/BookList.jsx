@@ -21,7 +21,7 @@ export default function BookList ({item}) {
 
   const handleOnClickDetail = (data)=>{
     navigate (
-      `/${data.isbn13}`, 
+      `book:/${data.isbn13}`, 
       { state :{
           state : data,
           from : location.pathname,

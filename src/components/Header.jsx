@@ -27,28 +27,28 @@ export const Header =  () => {
         <div className={`header`}>
           <div className={`header-left `}>
             <div className="logo"
-              onClick={()=>navigate('/',{replace:true})}
+              tabIndex={-1}
+                onClick={()=>navigate('/',{replace:true})}
               >
                 <img className="logo" src={logo} alt="로고" />
               </div>
           </div>
           <nav className={`nav-menu `}>
             <ul>
-              <li>
-              {/* <NavLink to='/'>
-                <img className="logo" src={logo} alt="로고" />
-              </NavLink> */}
-              </li>
-              <li>
-                <NavLink 
+              <li
+                tabIndex={0}
+              >
+                <NavLink
                 preventScrollReset
-                to="/" onClick={toggleMenu}>검색</NavLink>
+                to="/" >검색</NavLink>
               </li>
-              {/* <li>
-                <NavLink 
+              <li
+                tabIndex={0}
+              >
+                <NavLink
                 preventScrollReset
-                onClick={handleMaintenace} to="/local">지역모임</NavLink>
-              </li> */}
+                to="/faq">FAQ</NavLink>
+              </li>
             </ul>
           </nav>
         </div>
