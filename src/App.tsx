@@ -8,35 +8,27 @@ import { ReactComponent as Loading } from "./assets/loading.svg";
 
 interface ApiProps {
   response : {
-    doc : Items[]
+    doc : Item[]
   }
 }
 
-interface Items {
-  doc: {
-    addition_symbol: string;
-    authors: string;
-    bookDtlUrl: string;
-    bookImageURL: string;
-    bookname: string;
-    class_nm: string;
-    class_no: string;
-    isbn13: string;
-    loan_count: string;
-    no: number;
-    publication_year: string;
-    publisher: string;
-    ranking: string;
-    vol: string;
-  }
+interface Item {
+  addition_symbol: string;
+  authors: string;
+  bookDtlUrl: string;
+  bookImageURL: string;
+  bookname: string;
+  class_nm: string;
+  class_no: string;
+  isbn13: string;
+  loan_count: string;
+  no: number;
+  publication_year: string;
+  publisher: string;
+  ranking: string;
+  vol: string;
 }
 
-
-interface searchParams {
-  code : number;
-  start : string | null;
-  end : string | null;
-}
 
 function App() {
   const [title, setTitle] = useState<string>("");
@@ -50,7 +42,7 @@ const isFetching = useIsFetching()
 
 
 
-  const fetcingData = async (code:string | null, start:string | null, end:string | null):Promise<Items[] | undefined> =>{
+  const fetcingData = async (code:string | null, start:string | null, end:string | null):Promise<Item[] | undefined> =>{
     try{
       const resposne = await 
       fetch(`http://data4library.kr/api/loanItemSrch?authKey=${process.env.REACT_APP_LIBRARY}&dtl_region=${code}&startDt=${end}&endDt=${start}&pageSize=100&format=json`)
@@ -86,7 +78,7 @@ const isFetching = useIsFetching()
   }
   
 
-  const { data: libraryQuery, isPending } = useQuery<Items[] | undefined>({
+  const { data: libraryQuery, isPending } = useQuery<Item[] | undefined>({
     queryKey : ['library' ],
     queryFn :()=>fetcingData(code, start, end),
     enabled : queryBoolean
@@ -130,8 +122,8 @@ const isFetching = useIsFetching()
             </div>
           ) :null
         }
-        { libraryQuery && libraryQuery?.map(item => {
-        return <BookList key={item.doc.no} item={item} />
+        { libraryQuery && libraryQuery?.map((item: Item) => {
+        return <BookList key={item.no} item={item} />
         })
         }
           

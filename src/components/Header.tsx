@@ -1,4 +1,4 @@
-import React, {useState, } from "react";
+import React from "react";
 import { NavLink, Outlet, ScrollRestoration, useNavigate } from "react-router-dom";
 import logo from '../assets/Logo.svg';
 
@@ -38,9 +38,7 @@ export const Header:React.FC =  () => {
         </div>
       </header>
 
-      <ScrollRestoration getKey={(location) =>{
-      return location.key}} 
-      />
+      <ScrollRestoration getKey={(location) =>location.key} />
       <Outlet />
       <ScrollRestoration />
 
