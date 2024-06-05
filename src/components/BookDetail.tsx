@@ -58,9 +58,6 @@ export const BookDetail :React.FC = ()=>{
 
 
   const  isbn = state?.doc.isbn13;
-  const bookDesc = bookDetailInfoData?.response.book.description.replace("&lt;", '(').replace("&gt;", ")")
-
-
 
 
     const detailFetch= async () : Promise<ApiResponse | undefined> =>{
@@ -68,7 +65,6 @@ export const BookDetail :React.FC = ()=>{
       try{
         const response = await 
         fetch(`http://data4library.kr/api/usageAnalysisList?authKey=${process.env.REACT_APP_LIBRARY}&isbn13=${isbn}&format=json`)
-    // fetch("https://jsonplaceholder.typicode.com/todos/")
 
         if(!response.ok){
           throw new Error('상세 정보를 받아오는데 실패하였습니다.')
@@ -87,6 +83,7 @@ export const BookDetail :React.FC = ()=>{
     queryFn: detailFetch
   })
 
+  const bookDesc = bookDetailInfoData?.response.book.description.replace("&lt;", '(').replace("&gt;", ")")
 
 
 

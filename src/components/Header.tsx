@@ -1,25 +1,9 @@
+import React, {useState, } from "react";
 import { NavLink, Outlet, ScrollRestoration, useNavigate } from "react-router-dom";
 import logo from '../assets/Logo.svg';
-import React, {useState, } from "react";
 
-export const Header =  () => {
+export const Header:React.FC =  () => {
   const navigate = useNavigate();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isMobileView, setIsMobileView ] = useState(false);
-
-
-  const handleMaintenace = () =>{
-    navigate('/')
-    window.alert("유지보수 중입니다.")
-  }
-
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-    setIsMobileView(!isMobileView);
-
-  };
-
-
 
   return(
     <>

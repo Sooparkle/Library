@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import DateRangePickers, {DateRangePickersPickers} from "./DateRangePickers";
+import { DateRangePickers, DateRangePickersData as DateRangePickersDataOriginal } from "./DateRangePickers";
 
 
 interface SearchFormProps {
@@ -7,14 +7,9 @@ interface SearchFormProps {
   onSearch : (code : string, startDate : string | null, endDate : string |null) => void;
 }
 
-interface DataRangepickerProps {
-  onDates : (data :DateRangePickers.DataRangeData) => void
-}
 
-interface DateRangePickersData {
-  startDate : string | null;
-  endDate : string | null;
-}
+type DateRangePickersData = DateRangePickersDataOriginal;
+
 
 export default function SearchForm(props : SearchFormProps) {
   const [selectValue, setSelectvalue] = useState<string>('종로구');
@@ -27,14 +22,14 @@ export default function SearchForm(props : SearchFormProps) {
   const handleOnSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
 
-    onSearch(selectCode, sendStartDate, sendEndDate)
-    setTitle(selectValue)
+    props.onSearch(selectCode, sendStartDate, sendEndDate)
+    props.setTitle(selectValue)
   }
 
 
-  const onDates = ({ endDate :string | null, startDate : string | null }: DateRangeData) => {
-    const formattedStartDate = startDate?.toISOString().slice(0, 10); // YYYY-MM-DD
-    const formattedEndDate = endDate?.toISOString().slice(0, 10);
+  const onDates = ({ endDate, startDate }: DateRangePickersData) => {
+    const formattedStartDate = startDate ? new Date(startDate).toISOString().slice(0, 10) : null; // YYYY-MM-DD 
+    const formattedEndDate = endDate ? new Date(endDate).toISOString().slice(0, 10) : null;
 
     setSendStartDate(formattedStartDate);
     setSendEndDate(formattedEndDate);
@@ -42,10 +37,9 @@ export default function SearchForm(props : SearchFormProps) {
 
   const handleValue = (e : React.ChangeEvent<HTMLSelectElement>) => {
     const selectOption = e.target.options[e.target.selectedIndex]
-    const selectedCode = selectOption.dataset.value;
+    const selectedCode = selectOption.dataset.value as string;
     const selectedValue = selectOption.value;
 
-    console.log("searchForm component options")
 
     setSelectCode(selectedCode);
     setSelectvalue(selectedValue);

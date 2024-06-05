@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import ko from 'date-fns/locale/ko';
+import {ko} from 'date-fns/locale';
 
 
 export interface DateRangePickersProps {
@@ -25,12 +25,6 @@ useEffect(()=>{
 },[endDate])
 
 
-useEffect(()=>{
-  setStartDate("");
-  setEndDate("");
-},[setIsReset])
-
-
 useEffect(() => {
   const today = new Date();
   const oneWeekAgo = new Date();
@@ -39,21 +33,20 @@ useEffect(() => {
   setStartDate(today);
   setEndDate(oneWeekAgo);
 }, []);
+
   return (
     <div className="search-DateRangePicker">
 
       <DatePicker
         locale={ko}
         selected={startDate}
-        onChange={(date) => setStartDate(date) }
+        onChange={(date)  => setStartDate(date) }
         startDate={startDate}
         endDate={endDate}
         selectsStart
         id="startDateId"
         dateFormat="yyyy/MM/dd"
         placeholderText="검색 시작일"
-        getMonthValue={(date) => (date.toLocaleDateString('ko-KR', { month: 'short' }))}
-
       />
 
       <DatePicker
@@ -66,7 +59,6 @@ useEffect(() => {
         id="endDateId"
         dateFormat="yyyy/MM/dd"
         placeholderText="검색 종료일"
-        getMonthValue={(date) => (date.toLocaleDateString('ko-KR', { month: 'short' }))}
 
       />
     </div>

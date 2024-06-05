@@ -8,11 +8,11 @@ import { ReactComponent as Loading } from "./assets/loading.svg";
 
 interface ApiProps {
   response : {
-    doc : items[]
+    doc : Items[]
   }
 }
 
-interface items {
+interface Items {
   doc: {
     addition_symbol: string;
     authors: string;
@@ -39,31 +39,29 @@ interface searchParams {
 }
 
 function App() {
-  const [title, setTitle] = useState("");
-  const [ queryBoolean, setQueryBoolean ] =useState(false)
+  const [title, setTitle] = useState<string>("");
+  const [ queryBoolean, setQueryBoolean ] =useState<boolean>(false)
 
-  const [ code, setCode ] = useState(null)
-  const [ start, setStart ] = useState(null);
-  const [ end, setEnd ] = useState(null);
+  const [ code, setCode ] = useState<string | null>(null)
+  const [ start, setStart ] = useState<string | null>(null);
+  const [ end, setEnd ] = useState<string | null>(null);
 
 const isFetching = useIsFetching()
 
 
 
-
-
-  const fetcingData = async (code:number |null, start:string | null, end:string | null):Promise<items[]> =>{
+  const fetcingData = async (code:string | null, start:string | null, end:string | null):Promise<Items[] | undefined> =>{
     try{
       const resposne = await 
       fetch(`http://data4library.kr/api/loanItemSrch?authKey=${process.env.REACT_APP_LIBRARY}&dtl_region=${code}&startDt=${end}&endDt=${start}&pageSize=100&format=json`)
       // fetch("https://jsonplaceholder.typicode.com/todos/")
   
       if(!resposne.ok) {
-      throw new Error ('Access successful but serer access failed', resposne.status)
+      throw new Error (`Access successful but serer access failed, ${resposne.status}`)
     }
 
-      const data = await resposne.json();
-      const dataArray = await data.response.docs
+      const data :ApiProps  = await resposne.json();
+      const dataArray = data.response.doc
       return dataArray
     }
     catch(error){
@@ -78,7 +76,7 @@ const isFetching = useIsFetching()
 
 
   // set the datas from SearchForm componenet
-  const onSearch = (code:number, start:string | null, end : string |null ) =>{
+  const onSearch = (code: string | null, start:string | null, end : string |null ) =>{
     setQueryBoolean(true)
     
     setCode(code);
@@ -88,7 +86,7 @@ const isFetching = useIsFetching()
   }
   
 
-  const { data: libraryQuery, isPending } = useQuery({
+  const { data: libraryQuery, isPending } = useQuery<Items[] | undefined>({
     queryKey : ['library' ],
     queryFn :()=>fetcingData(code, start, end),
     enabled : queryBoolean
