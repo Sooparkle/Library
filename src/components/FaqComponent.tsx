@@ -26,7 +26,7 @@ const FaqDetail : React.FC<FaqDetailProps> =({ item, current, handleToggleId } :
       onClick={()=>handleToggleId(item.id)}
     >
       <div className={`faq-title ${current ? "activated" : ""}`} ><strong>{item.title}</strong></div>
-        <div className={`faq-description ${current  ? "activ ated" : "" }`} >
+        <div className={`faq-description ${current  ? "activated" : "" }`} >
           {item.description}
           </div>
     </li>
@@ -43,22 +43,27 @@ const handleToggleId = (id: number) => {
   return(
     <main>
       <h2
-        style={{textAlign:"center"}}
+        style={{textAlign:"center", marginTop:"100px"}}
       >FAQ</h2>
 
       <section className="FAQ-wrap">
-        <ul>
+        <ul
+          style={{display:"grid", gap:".5rem"}}
+        >
           {
             FAQ.map((item : FAQItem) => {
               return <FaqDetail 
               key={item.id}
-              item={item} current={currentId === item.id} handleToggleId={handleToggleId}/>
+              item={item} 
+              current={currentId === item.id} 
+              handleToggleId={handleToggleId}
+              />
             })
           }
         </ul>
         <Link to="/" 
           style={{
-          display:"black",
+          display:"block",
           background:"#095a9b", 
           padding:"1rem 1.8rem",
           color:"#fff",

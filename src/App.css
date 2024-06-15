@@ -2,6 +2,7 @@
   --main-color : #1f98e8;
   --strong-color : #095a9b;
   --light-color : #82c7f7;
+  --pale-color : #c4e7ff;
 
   font-family: "Noto Sans KR",sans-serif, Inter, system-ui, Avenir, Helvetica, Arial, ;
   line-height: 1.5;
@@ -27,7 +28,10 @@ html, body, ul, li, input{
 }
 
 input, select {
-  border-radius: 6px;;
+  border-radius: 6px;
+  font-size: 1.2rem;
+  padding: 0.2rem 0.1rem;
+  width: 160px;
 }
 
 ul, li {
@@ -46,7 +50,7 @@ a{
 /* header area */
 
 .header-wrap{
-  position: sticky;
+  position: fixed;
   top:0;
   box-shadow: 0px 6px 6px rgba(0, 0, 0, 0.127);
   width: 100%;
@@ -89,9 +93,6 @@ a{
   height: 100%;
 }
 
-.nav-menu{
-  height: 63px;
-}
 
 .header ul{
 display: flex;
@@ -101,6 +102,25 @@ gap:3rem;
 height: 100%;
 font-size: 18px;
 font-weight: bold;
+}
+
+nav li a {
+  color: gray;
+}
+
+nav li .active {
+  color: var(--strong-color);
+}
+
+@media screen and (max-width : 768px){
+  nav li a > *{
+    width: 24px;
+    height: 24px;;
+  }
+  nav li a >span {
+    display: none;
+  }
+
 }
 
 
@@ -114,6 +134,7 @@ font-weight: bold;
   align-items: center;
   height: 100%;
   padding: 0 1rem;
+  gap: 0.4rem;
 }
 
 .header ul li:hover,
@@ -173,9 +194,12 @@ font-weight: bold;
 
 
 .search-background{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   width: auto;
   height: auto;
-  min-height:660px;
   background: var(--light-color);
 }
 
@@ -206,8 +230,14 @@ font-weight: bold;
 }
 .search-wrap h1{
   margin: 0;
-  padding-top: 50px;
   text-align: center;
+  padding-top: 80px;
+}
+
+@media screen and (max-width : 768px){
+  .search-wrap h1{
+    font-size: 16px;
+  }
 }
 
 .search-wrap >p:nth-of-type(2) > span{
@@ -334,6 +364,11 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+
+
+
+/* main body area */
+
 .content{
   display: grid;
   grid-template-columns: 1fr;
@@ -344,6 +379,14 @@ button:focus-visible {
   box-sizing: border-box;
 }
 
+
+.content .content-result-search{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  align-items: center;
+  margin-top: 2.5rem;
+  margin-bottom: .5rem;
+}
 
 .book-wrap{
   display: grid;
@@ -419,6 +462,7 @@ font-weight: bold;
   border-radius: 8px;
   box-shadow: 0px 4px 10px #4a4a4a;
   width: fit-content;
+  max-width: 320px;
 }
 @media screen and (max-width:580px) {
   .detail-wrap .detail-book{
@@ -504,14 +548,15 @@ font-weight: bold;
 
 }
 
-.search-loader-wrap{
-  position: absolute;
-  top:50%;
-  left:50%;
-  transform: translate(-50%, -50%);
+#search-loader-wrap{
+  position: fixed;
+  top:0;
+  left:0;
+  right: 0;
+  bottom: 0;
   background: #ffffff;
-  width: 100%;
-  height: 100%;
+  max-width: 100%;
+  max-height: 100vh;
   min-width: 280px;
   min-height: 150px;
   padding: 0.5rem 1rem;
@@ -522,10 +567,10 @@ font-weight: bold;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  z-index: 10;
+  z-index: 5;
 }
 
-.search-loader-wrap >span{
+#search-loader-wrap >span{
   font-size: 12px;
 }
 
@@ -561,6 +606,7 @@ font-weight: bold;
   border: 1px solid rgb(191, 191, 191);
   border-collapse: collapse;
   margin-top: -1px;
+  border-radius: 8px;
 }
 
 .faq-title{
@@ -571,17 +617,18 @@ font-weight: bold;
 }
 
 .faq-title.activated{
-  background-color: #e2e2e2;
+  background-color: var(--pale-color);
+  border-bottom-width: 1px;
 
 }
 
 .faq-title:hover,
 .faq-title:focus-visible{
-  background-color: #e2e2e2;
+  background-color: var(--pale-color)
 }
 
 .faq-description{
-  background-color: var(--light-color);
+  background-color: #fff;
   max-height: 0;
   padding: 0 1rem;
   transition: translateY 1s ease-in-out, max-height 1s ease-in-out, padding 1s ease-in-out;
@@ -595,3 +642,5 @@ font-weight: bold;
   padding: 1rem;
 
 }
+
+

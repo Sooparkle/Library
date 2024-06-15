@@ -27,11 +27,13 @@ useEffect(()=>{
 
 useEffect(() => {
   const today = new Date();
-  const oneWeekAgo = new Date();
-  oneWeekAgo.setDate(today.getDate() - 15);
+  today.setDate(today.getDate() -1);
 
-  setStartDate(today);
-  setEndDate(oneWeekAgo);
+  const oneWeekAgo = new Date();
+  oneWeekAgo.setDate(today.getDate() - 16);
+
+  setStartDate(oneWeekAgo);
+  setEndDate(today);
 }, []);
 
   return (

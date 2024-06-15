@@ -38,14 +38,14 @@ interface Keyword {
 
 
 interface LocationState {
-    doc: {
-      isbn13: string;
-      bookImageURL: string;
-      bookname: string;
-      ranking: number;
-      authors: string;
-      class_nm: string;
-    };
+  doc: {
+    isbn13: string;
+    bookImageURL: string;
+    bookname: string;
+    ranking: number;
+    authors: string;
+    class_nm: string;
+  };
 }
 
 
@@ -53,18 +53,18 @@ interface LocationState {
 
 export const BookDetail :React.FC = ()=>{
   const location = useLocation()
-  const state = location.state as LocationState;
+  const state = location.state as LocationState | undefined;
   const navigate = useNavigate();
 
-
-  const  isbn = state?.doc.isbn13;
+  console.log("state", state)
+  const isbn = state?.doc.isbn13;
 
 
     const detailFetch= async () : Promise<ApiResponse | undefined> =>{
 
       try{
         const response = await 
-        fetch(`http://data4library.kr/api/usageAnalysisList?authKey=${process.env.REACT_APP_LIBRARY}&isbn13=${isbn}&format=json`)
+        fetch(`https://data4library.kr/api/usageAnalysisList?authKey=${process.env.REACT_APP_LIBRARY}&isbn13=${isbn}&format=json`)
 
         if(!response.ok){
           throw new Error('상세 정보를 받아오는데 실패하였습니다.')
@@ -85,7 +85,14 @@ export const BookDetail :React.FC = ()=>{
 
   const bookDesc = bookDetailInfoData?.response.book.description.replace("&lt;", '(').replace("&gt;", ")")
 
-
+  // if(!state || !state.doc) {
+  //   return(
+  //     <div>
+  //               <p>잘못된 접근입니다.</p>
+  //       <button onClick={() => navigate(-1)}>뒤로가기</button>
+  //     </div>
+  //   )
+  // }
 
   return(
 

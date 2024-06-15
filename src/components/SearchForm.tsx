@@ -4,7 +4,7 @@ import { DateRangePickers, DateRangePickersData as DateRangePickersDataOriginal 
 
 interface SearchFormProps {
   setTitle : (title : string) => void;
-  onSearch : (code : string, startDate : string | null, endDate : string |null) => void;
+  onSearch : (code : string | null, startDate : string | null, endDate : string |null) => void;
 }
 
 
@@ -12,8 +12,8 @@ type DateRangePickersData = DateRangePickersDataOriginal;
 
 
 export default function SearchForm(props : SearchFormProps) {
-  const [selectValue, setSelectvalue] = useState<string>('종로구');
-  const [selectCode, setSelectCode ] = useState<string>("11010")
+  const [selectValue, setSelectvalue] = useState<string>("종로구");
+  const [selectCode, setSelectCode ] = useState<string | null>("11010")
   const [sendStartDate, setSendStartDate] = useState<string | null>(null);
   const [sendEndDate, setSendEndDate] = useState<string | null>(null);
   
@@ -66,7 +66,7 @@ export default function SearchForm(props : SearchFormProps) {
           <option data-value="11060" value="동대문구">동대문구</option>
           <option data-value="11070" value="중량구">중랑구</option>
           <option data-value="11080" value="성북구">성북구</option>
-          <option data-value="11090" value="강복구">강북구</option>
+          <option data-value="11090" value="강북구">강북구</option>
           <option data-value="11100" value="도붕구">도봉구</option>
           <option data-value="11110" value="노원구">노원구</option>
           <option data-value="11120" value="은평구">은평구</option>
