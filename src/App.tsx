@@ -5,7 +5,8 @@ import BookList from "./components/BookList";
 import { useIsFetching, useQuery } from "@tanstack/react-query";
 import { ReactComponent as Loading } from "./assets/loading.svg";
 import { ReasultSearchBar } from "./components/ReasultSearchBar";
-
+import { FilterBar } from "./components/FilterBar";
+import { filterData } from "./data/filterData";
 
 interface ApiProps {
   response : {
@@ -42,8 +43,8 @@ function App() {
   const [ start, setStart ] = useState<string | null>(null);
   const [ end, setEnd ] = useState<string | null>(null);
 
-const isFetching = useIsFetching()
-
+  const [ filter, setFilter ] = useState<string[]>([])
+  const isFetching = useIsFetching()
 
 
   const fetcingData = async (code:string | null, start:string | null, end:string | null):Promise<Item[] | undefined> =>{
@@ -56,7 +57,7 @@ const isFetching = useIsFetching()
       throw new Error (`Access successful but serer access failed, ${resposne.status}`)
     }
 
-      const data :ApiProps  = await resposne.json();
+      const data : ApiProps  = await resposne.json();
       const dataArray = data.response.docs
       return dataArray
     }
@@ -82,6 +83,7 @@ const isFetching = useIsFetching()
   }
   
 
+  // TanStack Query fetching
   const { data: libraryQuery, isPending } = useQuery<Item[] | undefined>({
     queryKey : ['library' ],
     queryFn :()=>fetcingData(code, start, end),
@@ -89,11 +91,33 @@ const isFetching = useIsFetching()
   })
 
 
-  let searchResult :Item[] =[]
-  if(libraryQuery){
-    searchResult = libraryQuery.filter(item => item.doc.bookname.includes(search))
+  // search filter arguments
+  let searchResult: Item[] = [];
+  if (libraryQuery) {
+    searchResult = libraryQuery.filter((item) => item.doc.bookname.includes(search));
+    if (filter.length > 0) {
+      searchResult = searchResult.filter((i: Item) =>
+        filter.some((category) => i.doc.class_nm.includes(category))
+      );
+    }
   }
 
+
+
+  const resultComment: React.ReactNode = searchResult.length > 0 
+    ? <p style={{ textAlign: "center" }}>결과 목록 - 끝 -</p> 
+    : <p style={{ textAlign: "center", margin:"3rem 0" }}>검색된 결과가 없습니다.</p>;
+
+
+
+  const handleFilter = (category : string) => () =>{
+    setFilter(prev => prev.includes(category) ? 
+      prev.filter(item => item !== category )
+      : [...prev, category]
+    )
+  }
+
+  console.log("filter", filter)
 
   return (
     <>
@@ -120,32 +144,59 @@ const isFetching = useIsFetching()
 
 
     {/* contents area */}
+
+    {/* search in result area */}
     { 
       libraryQuery && <main className="content">
         <section className="content-result-search">
-      {
-        libraryQuery && <p>전체 목록 : {searchResult.length}</p>
-      }
-      <ReasultSearchBar 
-        setSearch={setSearch}
-        search={search}
-        /> 
+        {
+          libraryQuery && <p>전체 목록 : {searchResult.length}</p>
+        }
+        <ReasultSearchBar 
+          setSearch={setSearch}
+          search={search}
+          /> 
+
+
       </section>
+
+      <section
+        aria-label="검색 결과 책 분류 필터"
+      >
+        <ul
+          className="search-filter-wrap"
+        
+        >
+          {
+            filterData.map(i => (
+              <FilterBar
+              {...i}
+              key={i.id}
+              isChecked={filter.includes(i.category)}
+              handleFilter={handleFilter(i.category)}
+              />
+            ))
+          }
+
+        </ul>
+      </section>
+
         { 
         libraryQuery && searchResult?.map((item: Item) => {
           return <BookList key={item.doc.no} item={item} />
           })
         }
-        { libraryQuery && <p style={{textAlign:"center"}}>결과 목록 - 끝 -</p>}
+
+        { resultComment }
 
       </main>
       }
 
     {/* API pending popup area  */}
     {
-    isFetching ?  (
+    isFetching ? (
       <div id="search-loader-wrap">
-        <p><strong>"{title}" 데이터 수집중</strong></p>
+        <p><strong>"{title}" 데이터 다운로드 중</strong></p>
           국립중앙도서관에서 제공하는 API가 다소 시간이 걸립니다.
         <span>(평균 통신 시간 : 7초 ~ 13초 )</span>
         <Loading className="loader" />

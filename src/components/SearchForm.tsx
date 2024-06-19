@@ -35,6 +35,7 @@ export default function SearchForm(props : SearchFormProps) {
     setSendEndDate(formattedEndDate);
   };
 
+  // select tag set function
   const handleValue = (e : React.ChangeEvent<HTMLSelectElement>) => {
     const selectOption = e.target.options[e.target.selectedIndex]
     const selectedCode = selectOption.dataset.value as string;
