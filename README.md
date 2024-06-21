@@ -33,8 +33,7 @@
 - react-router-dom
 - react-datepicker
 - Tanstack Query
-- react-redux (프로젝트 완료 이후)
-- react-@reduxjs/toolkit (프로젝트 완료 이후)
+
 
 <br/>
 <br/>
