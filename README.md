@@ -3,7 +3,7 @@
 
 
 
-
+<br/><br/>
 ## 선정 이유
 
 ### 문제인식
@@ -25,10 +25,9 @@
   
 ```{학부모 + 시니어(50+)} + 지역 상권 + 도서```
 
-
-
-
 -- 
+<br/><br/><br/>
+
 
 ## libraries setting up
 - react-router-dom
@@ -37,9 +36,22 @@
 - react-redux (프로젝트 완료 이후)
 - react-@reduxjs/toolkit (프로젝트 완료 이후)
 
+<br/>
+<br/>
+<br/>
 
-<img src="https://github.com/Sooparkle/Library/assets/105525761/65bf55df-21d7-4172-ad7a-2a77d39c6e26" width="400" height="auto">
+## 이미지
+
+
+<img src="https://github.com/Sooparkle/Library/assets/105525761/65bf55df-21d7-4172-ad7a-2a77d39c6e26" width="400" height="auto">시작이미지</img>
+<br/>
+
 <img src="https://github.com/Sooparkle/Library/assets/105525761/6cbeefc8-6df4-4e3c-809c-522454f900cf" width="400" height="auto">
+검색 결과 이미지</img>
 
+<br/>
+<br/>
+<br/>
+<a href="https://library-62r.pages.dev/" alt="서울시 지역구 도서 베스트 대출 검색 사이트" target="_blank" >체험하기</a>
 
 
