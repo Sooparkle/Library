@@ -55,7 +55,7 @@ const BookList : React.FC<ItemsProps> =  ( { item }) => {
       <div className="book-wrap" key={item.doc.no}>
         <img src={item.doc.bookImageURL} alt={item.doc.bookname} />
         <div className="book-brief">
-          <div className="name">{item.doc.bookname}</div>
+          <div className="name">{item.doc.no}. {item.doc.bookname}</div>
           <div className="author">저자: {item.doc.authors}</div>
           <div className="class">분류: {item.doc.class_nm}</div>
           <div className="isbn13">ISBN: {item.doc.isbn13}</div>

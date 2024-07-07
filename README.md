@@ -33,6 +33,7 @@
 - react-router-dom
 - react-datepicker
 - Tanstack Query
+- ChartJS
 
 
 <br/>

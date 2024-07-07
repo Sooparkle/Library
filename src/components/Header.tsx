@@ -15,7 +15,7 @@ export const Header:React.FC =  () => {
           <div className={`header-left `}>
             <div
               tabIndex={-1}
-                onClick={()=>navigate('/',{replace:true})}
+                onClick={()=>navigate('/ ',{replace:true})}
               >
                 <img className="logo" src={logo} alt="로고" />
               </div>

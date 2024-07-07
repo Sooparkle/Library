@@ -394,10 +394,10 @@ button:focus-visible {
 .content .search-filter-wrap{
   display: flex;
   flex-wrap: wrap;
-  padding: .2rem .4rem;
+  padding: .8rem .4rem;
   background-color: #f9f9f9;
   margin-bottom: 20px;
-
+  border-radius: .2rem;
 }
 
 .content .search-filter-wrap > li{
@@ -427,13 +427,21 @@ button:focus-visible {
   padding-right: 1.5rem; */
 }
 
+@media screen and (max-width:768px){
+  .book-wrap{
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    place-items: center;
+  }
+}
+
 .book-wrap:hover{
   background: #f9f9f9;
 }
 
 .book-wrap img{
   display: block;
-  max-width: 100%;
+  max-width: 200px;
   min-width: 50px;
   border-radius: 8px;
   box-shadow: 0px 6px 16px #4a4a4a;
@@ -477,6 +485,12 @@ font-weight: bold;
   padding: 0 4rem;
   margin-top: 100px;
   box-sizing: border-box;
+}
+
+@media screen and (max-width: 768px) {
+  .detail-wrap{
+    padding: 0 1rem;
+  }
 }
 
 .detail-wrap .detail-book{
@@ -673,3 +687,19 @@ font-weight: bold;
 }
 
 
+/* chart  area*/
+.chart-wrap{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-bottom: 2rem;
+  max-width: 600px;
+  place-items: center ;
+  gap: .8rem;
+  margin-inline: auto;
+}
+
+@media screen and (max-width: 768px) {
+  .chart-wrap{
+    grid-template-columns: 1fr;
+  }
+}

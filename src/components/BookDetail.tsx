@@ -56,7 +56,6 @@ export const BookDetail :React.FC = ()=>{
   const state = location.state as LocationState | undefined;
   const navigate = useNavigate();
 
-  console.log("state", state)
   const isbn = state?.doc.isbn13;
 
 

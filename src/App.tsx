@@ -7,15 +7,20 @@ import { ReactComponent as Loading } from "./assets/loading.svg";
 import { ReasultSearchBar } from "./components/ReasultSearchBar";
 import { FilterBar } from "./components/FilterBar";
 import { filterData } from "./data/filterData";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend, Title } from "chart.js";
+import { Pie } from "react-chartjs-2";
+import { PieChart } from "./components/PieCgart";
+
+ChartJS.register(ArcElement, Tooltip, Legend, Title);
 
 interface ApiProps {
-  response : {
-    docs : Item[]
+  response: {
+    docs: Item[]
   }
 }
 
 interface Item {
-  doc : {
+  doc: {
     addition_symbol: string;
     authors: string;
     bookDtlUrl: string;
@@ -33,65 +38,47 @@ interface Item {
   }
 }
 
-
 function App() {
   const [title, setTitle] = useState<string>("");
-  const [ queryBoolean, setQueryBoolean ] =useState<boolean>(false)
-  const [ search, setSearch ] = useState<string>("");
+  const [queryBoolean, setQueryBoolean] = useState<boolean>(false)
+  const [search, setSearch] = useState<string>("");
 
-  const [ code, setCode ] = useState<string | null>(null)
-  const [ start, setStart ] = useState<string | null>(null);
-  const [ end, setEnd ] = useState<string | null>(null);
+  const [code, setCode] = useState<string | null>(null)
+  const [start, setStart] = useState<string | null>(null);
+  const [end, setEnd] = useState<string | null>(null);
 
-  const [ filter, setFilter ] = useState<string[]>([])
+  const [filter, setFilter] = useState<string[]>([])
+  const [visibleCount, setVisibleCount] = useState<number>(10); // State to manage the number of visible items
   const isFetching = useIsFetching()
 
-
-  const fetcingData = async (code:string | null, start:string | null, end:string | null):Promise<Item[] | undefined> =>{
-    
-    try{
-      const resposne = await 
-      fetch(`https://data4library.kr/api/loanItemSrchByLib?authKey=${process.env.REACT_APP_LIBRARY}&dtl_region=${code}&startDt=${start}&endDt=${end}&pageSize=50&format=json`)
-  
-      if(!resposne.ok) {
-      throw new Error (`Access successful but serer access failed, ${resposne.status}`)
-    }
-
-      const data : ApiProps  = await resposne.json();
-      const dataArray = data.response.docs
-      return dataArray
-    }
-    catch(error){
-        console.error("데이터를 가져오는 데 실패하였습니다.", error)
-    }
-    finally{
+  const fetchingData = async (code: string | null, start: string | null, end: string | null): Promise<Item[] | undefined> => {
+    try {
+      const response = await fetch(`https://data4library.kr/api/loanItemSrchByLib?authKey=${process.env.REACT_APP_LIBRARY}&dtl_region=${code}&startDt=${start}&endDt=${end}&pageSize=50&format=json`)
+      if (!response.ok) {
+        throw new Error(`Access successful but server access failed, ${response.status}`)
+      }
+      const data: ApiProps = await response.json();
+      return data.response.docs
+    } catch (error) {
+      console.error("데이터를 가져오는 데 실패하였습니다.", error)
+    } finally {
       setQueryBoolean(false)
     }
-
   }
 
-
-
-  // set the datas from SearchForm componenet
-  const onSearch = (code: string | null, start:string | null, end : string |null ) =>{
+  const onSearch = (code: string | null, start: string | null, end: string | null) => {
     setQueryBoolean(true)
-    
     setCode(code);
     setStart(start);
     setEnd(end);
-    
   }
-  
 
-  // TanStack Query fetching
-  const { data: libraryQuery, isPending } = useQuery<Item[] | undefined>({
-    queryKey : ['library' ],
-    queryFn :()=>fetcingData(code, start, end),
-    enabled : queryBoolean
+  const { data: libraryQuery } = useQuery<Item[] | undefined>({
+    queryKey: ['library'],
+    queryFn: () => fetchingData(code, start, end),
+    enabled: queryBoolean
   })
 
-
-  // search filter arguments
   let searchResult: Item[] = [];
   if (libraryQuery) {
     searchResult = libraryQuery.filter((item) => item.doc.bookname.includes(search));
@@ -102,107 +89,85 @@ function App() {
     }
   }
 
+  const resultComment: React.ReactNode = searchResult.length > 0
+    ? <p style={{ textAlign: "center" }}>결과 목록 - 끝 -</p>
+    : <p style={{ textAlign: "center", margin: "3rem 0" }}>검색된 결과가 없습니다.</p>;
 
-
-  const resultComment: React.ReactNode = searchResult.length > 0 
-    ? <p style={{ textAlign: "center" }}>결과 목록 - 끝 -</p> 
-    : <p style={{ textAlign: "center", margin:"3rem 0" }}>검색된 결과가 없습니다.</p>;
-
-
-
-  const handleFilter = (category : string) => () =>{
-    setFilter(prev => prev.includes(category) ? 
-      prev.filter(item => item !== category )
+  const handleFilter = (category: string) => () => {
+    setFilter(prev => prev.includes(category) ?
+      prev.filter(item => item !== category)
       : [...prev, category]
     )
   }
 
-  console.log("filter", filter)
+  const showMoreItems = () => {
+    setVisibleCount(prevCount => prevCount + 10);
+  }
+
 
   return (
     <>
-      <section 
-        style={{height : libraryQuery ? "55dvh" : "100dvh"}}
-      className="search-background">
-
-        <div 
-        className="search-wrap"
-      
-        
-        >
+      <section
+        style={{ height: libraryQuery ? "55dvh" : "100dvh" }}
+        className="search-background">
+        <div className="search-wrap">
           <h1>어떤 도서관의 대출 베스트를 볼까요?</h1>
-          <SearchForm 
+          <SearchForm
             setTitle={setTitle}
             onSearch={onSearch}
-
           />
-          <p><span>국립중앙도서관에서 제공하는 정보입니다.</span> 이점 양해 부탁드립니다.</p>
         </div>
-
       </section>
 
-
-
-    {/* contents area */}
-
-    {/* search in result area */}
-    { 
-      libraryQuery && <main className="content">
+      {libraryQuery && <main className="content">
         <section className="content-result-search">
-        {
-          libraryQuery && <p>전체 목록 : {searchResult.length}</p>
-        }
-        <ReasultSearchBar 
-          setSearch={setSearch}
-          search={search}
-          /> 
+          {libraryQuery && <p>전체 목록 : {searchResult.length}</p>}
+          <ReasultSearchBar
+            setSearch={setSearch}
+            search={search}
+          />
+        </section>
 
-
-      </section>
-
-      <section
-        aria-label="검색 결과 책 분류 필터"
-      >
-        <ul
-          className="search-filter-wrap"
-        
-        >
-          {
-            filterData.map(i => (
+        <section
+          aria-label="검색 결과 책 분류 필터">
+          <ul className="search-filter-wrap">
+            {filterData.map(i => (
               <FilterBar
-              {...i}
-              key={i.id}
-              isChecked={filter.includes(i.category)}
-              handleFilter={handleFilter(i.category)}
+                {...i}
+                key={i.id}
+                isChecked={filter.includes(i.category)}
+                handleFilter={handleFilter(i.category)}
               />
-            ))
-          }
+            ))}
+          </ul>
+        </section>
 
-        </ul>
-      </section>
-
-        { 
-        libraryQuery && searchResult?.map((item: Item) => {
-          return <BookList key={item.doc.no} item={item} />
-          })
+        {libraryQuery &&
+          <PieChart data={libraryQuery} />
         }
 
-        { resultComment }
+        {libraryQuery && searchResult.slice(0, visibleCount).map((item: Item) => {
+          return <BookList key={item.doc.no} item={item} />
+        })}
 
-      </main>
-      }
+        {visibleCount < searchResult.length && (
+          <div style={{ textAlign: "center", margin: "2rem 0" }}>
+            <button onClick={showMoreItems} disabled={libraryQuery.length === visibleCount }>더 보기</button>
+          </div>
+        )}
 
-    {/* API pending popup area  */}
-    {
-    isFetching ? (
-      <div id="search-loader-wrap">
-        <p><strong>"{title}" 데이터 다운로드 중</strong></p>
+        {resultComment}
+
+      </main>}
+
+      {isFetching ? (
+        <div id="search-loader-wrap">
+          <p><strong>"{title}" 데이터 다운로드 중</strong></p>
           국립중앙도서관에서 제공하는 API가 다소 시간이 걸립니다.
-        <span>(평균 통신 시간 : 7초 ~ 13초 )</span>
-        <Loading className="loader" />
-      </div>
-    ) :null
-  }
+          <span>(평균 통신 시간 : 7초 ~ 13초 )</span>
+          <Loading className="loader" />
+        </div>
+      ) : null}
     </>
   );
 }
