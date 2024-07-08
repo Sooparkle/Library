@@ -6,12 +6,8 @@ import { useIsFetching, useQuery } from "@tanstack/react-query";
 import { ReactComponent as Loading } from "./assets/loading.svg";
 import { ReasultSearchBar } from "./components/ReasultSearchBar";
 import { FilterBar } from "./components/FilterBar";
-import { filterData } from "./data/filterData";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend, Title } from "chart.js";
-import { Pie } from "react-chartjs-2";
 import { PieChart } from "./components/PieCgart";
-
-ChartJS.register(ArcElement, Tooltip, Legend, Title);
+import { filterData } from "./data/filterData";
 
 interface ApiProps {
   response: {
@@ -37,6 +33,7 @@ interface Item {
     vol: string;
   }
 }
+
 
 function App() {
   const [title, setTitle] = useState<string>("");
@@ -76,7 +73,9 @@ function App() {
   const { data: libraryQuery } = useQuery<Item[] | undefined>({
     queryKey: ['library'],
     queryFn: () => fetchingData(code, start, end),
-    enabled: queryBoolean
+    gcTime:1000 * 60 * 60,
+    staleTime : 1000 * 60 * 30,
+    enabled: queryBoolean,
   })
 
   let searchResult: Item[] = [];

@@ -33,7 +33,7 @@ const router = createBrowserRouter([
   },
 ]);
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient();
 
 const rootElement =document.getElementById('root');
 
