@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { ReactComponent as NoImage } from "../assets/noImage.svg"
 
 
 
@@ -28,10 +29,21 @@ interface ItemsProps{
 }
 
 
+interface optionsType {
+  headers :{
+    Authorization : string | undefined
+  },
+  params : {
+    query : string
+  }
+
+}
+
 const BookList : React.FC<ItemsProps> =  ( { item }) => {
   const navigate = useNavigate();
   const { state } = useLocation();
   const location =  useLocation();
+  const [ image, setImage ] =  useState()
   
 
   const handleOnClickDetail =()=>{
@@ -48,12 +60,43 @@ const BookList : React.FC<ItemsProps> =  ( { item }) => {
   }
 
 
+  const KakaoBookAPI = async () =>{
+    const kakaoAPIkey = process.env.REACT_APP_KAKAO 
+    if(!kakaoAPIkey){
+      console.error("KaKao API Key is not defined")
+      return
+    }
+
+    const options ={
+      headers :{
+        Authorization : `KakaoAK ${kakaoAPIkey}`
+      }
+    }
+
+    try{      
+      const imageData = await fetch( `https://dapi.kakao.com/v3/search/book?target=isbn&query=${item?.doc.isbn13}`, options)      
+      const data = await imageData.json()
+      setImage(data.documents[0].thumbnail);
+    }catch(error){
+      console.error("Kako API Fetch is failed", error)
+
+    }
+  }
+
+  KakaoBookAPI();
+
 
   return (
     <div>
 
       <div className="book-wrap" key={item.doc.no}>
-        <img src={item.doc.bookImageURL} alt={item.doc.bookname} />
+        {
+          image ? (
+            <img src={image} alt={item.doc.bookname} />
+          ) : (
+            <NoImage />
+          )
+        }
         <div className="book-brief">
           <div className="name">{item.doc.no}. {item.doc.bookname}</div>
           <div className="author">저자: {item.doc.authors}</div>

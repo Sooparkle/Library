@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useLocation, useNavigate } from "react-router-dom";
+import { ReactComponent as NoImage } from "../assets/noImage.svg"
 
 interface ApiResponse {
   response : BookResponse;
@@ -93,11 +94,20 @@ export const BookDetail :React.FC = ()=>{
   //   )
   // }
 
+console.log("dd", bookDetailInfoData)
+
   return(
 
     <div className="detail-wrap">
       <section className="detail-book">
-        <img src={state?.doc.bookImageURL} alt={state?.doc.bookname}></img>
+        {
+          bookDetailInfoData?.response.book.bookImageURL ? (
+            <img src={bookDetailInfoData?.response.book.bookImageURL} alt={state?.doc.bookname}></img>
+          ) : (
+            <NoImage />
+          )
+
+        }
         <div className="detail-info">
           <div  className="detail-name">{state?.doc.ranking}. {state?.doc.bookname}</div>
           <div className="">{state?.doc.authors}</div>

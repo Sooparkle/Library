@@ -3,8 +3,6 @@
   --strong-color : #095a9b;
   --light-color : #82c7f7;
   --pale-color : #c4e7ff;
-
-  font-family: "Noto Sans KR",sans-serif, Inter, system-ui, Avenir, Helvetica, Arial, ;
   line-height: 1.5;
 
 
@@ -431,8 +429,9 @@ button:focus-visible {
   .book-wrap{
     grid-template-columns: 1fr;
     gap: 1rem;
-    place-items: center;
   }
+
+
 }
 
 .book-wrap:hover{
@@ -440,11 +439,17 @@ button:focus-visible {
 }
 
 .book-wrap img{
+  place-self: center;
   display: block;
   max-width: 200px;
   min-width: 50px;
   border-radius: 8px;
   box-shadow: 0px 6px 16px #4a4a4a;
+  object-fit: fill;
+}
+
+.book-wrap svg{
+  place-self: center;
 }
 
 
