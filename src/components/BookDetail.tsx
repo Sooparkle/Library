@@ -78,34 +78,34 @@ export const BookDetail :React.FC = ()=>{
   
     }
 
-  const { data:bookDetailInfoData } = useQuery<ApiResponse | undefined>({
+  const { data:bookDetailInfoData, isFetching,isPending } = useQuery<ApiResponse | undefined>({
     queryKey : ["detail"],
-    queryFn: detailFetch
+    queryFn: detailFetch,
+    gcTime: 1000,
+    staleTime : 1000,
   })
 
   const bookDesc = bookDetailInfoData?.response.book.description.replace("&lt;", '(').replace("&gt;", ")")
 
-  // if(!state || !state.doc) {
-  //   return(
-  //     <div>
-  //               <p>잘못된 접근입니다.</p>
-  //       <button onClick={() => navigate(-1)}>뒤로가기</button>
-  //     </div>
-  //   )
-  // }
 
   return(
 
     <div className="detail-wrap">
       <section className="detail-book">
-        {
-          bookDetailInfoData?.response.book.bookImageURL ? (
+
+        {isPending &&  <NoImage /> }
+        {bookDetailInfoData && 
+          <img src={bookDetailInfoData?.response.book.bookImageURL} alt={state?.doc.bookname}></img>
+        }
+
+        {/* {
+          bookDetailInfoData && !isPending ? (
             <img src={bookDetailInfoData?.response.book.bookImageURL} alt={state?.doc.bookname}></img>
           ) : (
             <NoImage />
           )
+        } */}
 
-        }
         <div className="detail-info">
           <div  className="detail-name">{state?.doc.ranking}. {state?.doc.bookname}</div>
           <div className="">{state?.doc.authors}</div>
@@ -118,7 +118,7 @@ export const BookDetail :React.FC = ()=>{
       <div className="detail-description">
         <div >
           {
-            bookDetailInfoData ? bookDesc
+            bookDetailInfoData && !(bookDesc === "") ? bookDesc
           : <span>현재 제공하는 데이터가 없습니다.</span>
           }
         </div>
