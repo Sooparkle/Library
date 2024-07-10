@@ -8,6 +8,8 @@ import { ReasultSearchBar } from "./components/ReasultSearchBar";
 import { FilterBar } from "./components/FilterBar";
 import { PieChart } from "./components/PieCgart";
 import { filterData } from "./data/filterData";
+import useStore from "./store/useSore";
+
 
 interface ApiProps {
   response: {
@@ -45,8 +47,8 @@ function App() {
   const [end, setEnd] = useState<string | null>(null);
 
   const [filter, setFilter] = useState<string[]>([])
-  const [visibleCount, setVisibleCount] = useState<number>(10); // State to manage the number of visible items
   const isFetching = useIsFetching()
+  const { counts: visibleCount, increase } = useStore();
 
   const fetchingData = async (code: string | null, start: string | null, end: string | null): Promise<Item[] | undefined> => {
     try {
@@ -99,9 +101,11 @@ function App() {
     )
   }
 
+
   const showMoreItems = () => {
-    setVisibleCount(prevCount => prevCount + 10);
-  }
+    increase(10);
+  };
+
 
 
   return (
@@ -151,7 +155,11 @@ function App() {
 
         {visibleCount < searchResult.length && (
           <div style={{ textAlign: "center", margin: "2rem 0" }}>
-            <button onClick={showMoreItems} disabled={libraryQuery.length === visibleCount }>더 보기</button>
+          </div>
+        )}
+        {visibleCount < searchResult.length && (
+          <div style={{ textAlign: "center", margin: "2rem 0" }}>
+            <button onClick={showMoreItems} disabled={visibleCount >= searchResult.length}>더 보기</button>
           </div>
         )}
 
@@ -159,6 +167,8 @@ function App() {
 
       </main>}
 
+
+    {/* Loading POP COMMONET */}
       {isFetching ? (
         <div id="search-loader-wrap">
           <p><strong>"{title}" 데이터 다운로드 중</strong></p>

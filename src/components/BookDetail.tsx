@@ -94,8 +94,6 @@ export const BookDetail :React.FC = ()=>{
   //   )
   // }
 
-console.log("dd", bookDetailInfoData)
-
   return(
 
     <div className="detail-wrap">
