@@ -48,7 +48,7 @@ a{
 /* header area */
 
 .header-wrap{
-  position: fixed;
+  position: sticky;
   top:0;
   box-shadow: 0px 6px 6px rgba(0, 0, 0, 0.127);
   width: 100%;
@@ -193,12 +193,11 @@ nav li .active {
 
 .search-background{
   display: flex;
-  flex-direction: column;
   justify-content: center;
-  align-items: center;
   width: auto;
   height: auto;
   background: var(--light-color);
+  padding : 2rem 0;
 }
 
 .search-down-allow{
@@ -220,6 +219,7 @@ nav li .active {
   }
 }
 .search-wrap{
+  flex: 1;
   min-width: 200px;
   max-width: 460px;
   margin-inline: auto;
@@ -694,12 +694,10 @@ font-weight: bold;
 
 /* chart  area*/
 .chart-wrap{
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
   margin-bottom: 2rem;
   max-width: 600px;
   place-items: center ;
-  gap: .8rem;
   margin-inline: auto;
 }
 

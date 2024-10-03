@@ -120,7 +120,14 @@ function App() {
             onSearch={onSearch}
           />
         </div>
+      {/* chart 영역 */}
+      {libraryQuery &&
+          <PieChart data={libraryQuery} />
+        }
       </section>
+
+
+
 
       {libraryQuery && <main className="content">
         <section className="content-result-search">
@@ -131,6 +138,8 @@ function App() {
           />
         </section>
 
+
+        {/* 검색 필터 영역 */}
         <section
           aria-label="검색 결과 책 분류 필터">
           <ul className="search-filter-wrap">
@@ -145,9 +154,8 @@ function App() {
           </ul>
         </section>
 
-        {libraryQuery &&
-          <PieChart data={libraryQuery} />
-        }
+
+        
 
         {libraryQuery && searchResult.slice(0, visibleCount).map((item: Item) => {
           return <BookList key={item.doc.no} item={item} />
