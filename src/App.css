@@ -192,12 +192,16 @@ nav li .active {
 
 
 .search-background{
-  display: flex;
-  justify-content: center;
-  width: auto;
-  height: auto;
   background: var(--light-color);
-  padding : 2rem 0;
+}
+
+.search-items-wrap{
+  max-width: 1200px;
+  width: 100%;
+  display: flex;
+  align-items: stretch;
+  height: 100%;
+  margin-inline: auto;
 }
 
 .search-down-allow{
@@ -602,6 +606,7 @@ font-weight: bold;
   left:0;
   right: 0;
   bottom: 0;
+  opacity: 0.9;
   background: #ffffff;
   max-width: 100%;
   max-height: 100vh;
@@ -699,6 +704,12 @@ font-weight: bold;
   max-width: 600px;
   place-items: center ;
   margin-inline: auto;
+}
+
+.chart-wrap li{
+  color:#fff;
+  font-size: 18px;
+  font-weight: 500;
 }
 
 @media screen and (max-width: 768px) {

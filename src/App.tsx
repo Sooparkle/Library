@@ -72,11 +72,12 @@ function App() {
     setEnd(end);
   }
 
+
   const { data: libraryQuery } = useQuery<Item[] | undefined>({
     queryKey: ['library'],
     queryFn: () => fetchingData(code, start, end),
-    gcTime:1000 * 60 * 60,
-    staleTime : 1000 * 60 * 30,
+    // gcTime:1000 * 60 * 60,
+    // staleTime : 1000 * 60 * 30,
     enabled: queryBoolean,
   })
 
@@ -111,21 +112,27 @@ function App() {
   return (
     <>
       <section
-        style={{ height: libraryQuery ? "55dvh" : "100dvh" }}
+        style={{ height: libraryQuery ? "55dvh" : "calc(100dvh - 4rem)" }}
         className="search-background">
-        <div className="search-wrap">
-          <h1>어떤 도서관의 대출 베스트를 볼까요?</h1>
-          <SearchForm
-            setTitle={setTitle}
-            onSearch={onSearch}
-          />
-        </div>
-      {/* chart 영역 */}
-      {libraryQuery &&
-          <PieChart data={libraryQuery} />
-        }
-      </section>
 
+          <div
+            className="search-items-wrap"
+          >
+            <div className="search-wrap">
+              <h1>어떤 도서관의 대출 베스트를 볼까요?</h1>
+              <SearchForm
+                setTitle={setTitle}
+                onSearch={onSearch}
+              />
+            </div>
+
+            {/* chart 영역 */}
+            {libraryQuery &&
+              <PieChart data={libraryQuery} />
+            }
+          </div>
+
+      </section>
 
 
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink, Outlet, ScrollRestoration, useNavigate } from "react-router-dom";
+import { NavLink, Outlet, ScrollRestoration, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import logo from '../assets/Logo.svg';
 import { LuSearch } from "react-icons/lu";
 import { GoQuestion } from "react-icons/go";
@@ -7,6 +7,13 @@ import { GoQuestion } from "react-icons/go";
 
 export const Header:React.FC =  () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const handleReload = () =>{
+    if(location.pathname === '/')window.location.reload();
+    navigate('/')
+  }
+
+
 
   return(
     <>
@@ -15,7 +22,7 @@ export const Header:React.FC =  () => {
           <div className={`header-left `}>
             <div
               tabIndex={-1}
-                onClick={()=>navigate('/ ',{replace:true})}
+                onClick={handleReload}
               >
                 <img className="logo" src={logo} alt="로고" />
               </div>
