@@ -202,6 +202,7 @@ nav li .active {
   align-items: stretch;
   height: 100%;
   margin-inline: auto;
+  padding-top: 80px;
 }
 
 .search-down-allow{
@@ -233,7 +234,7 @@ nav li .active {
 .search-wrap h1{
   margin: 0;
   text-align: center;
-  padding-top: 80px;
+  /* padding-top: 80px; */
 }
 
 @media screen and (max-width : 768px){
@@ -715,5 +716,10 @@ font-weight: bold;
 @media screen and (max-width: 768px) {
   .chart-wrap{
     grid-template-columns: 1fr;
+  }
+
+  .search-items-wrap{
+    flex-direction: column;
+    gap: 2rem;
   }
 }

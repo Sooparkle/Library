@@ -112,14 +112,14 @@ function App() {
   return (
     <>
       <section
-        style={{ height: libraryQuery ? "55dvh" : "calc(100dvh - 4rem)" }}
+        style={{ height: libraryQuery ? "100%" : "calc(100dvh - 4rem)" }}
         className="search-background">
 
           <div
             className="search-items-wrap"
           >
             <div className="search-wrap">
-              <h1>어떤 도서관의 대출 베스트를 볼까요?</h1>
+              <h1>어떤 구 도서관의 대출 베스트를 볼까요?</h1>
               <SearchForm
                 setTitle={setTitle}
                 onSearch={onSearch}
